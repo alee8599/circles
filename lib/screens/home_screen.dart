@@ -1,4 +1,6 @@
+import 'package:circles/screens/login.dart';
 import 'package:circles/screens/your_events.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'placeholder.dart';
 import 'package:circles/theme.dart';
@@ -8,6 +10,8 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+
+final auth = FirebaseAuth.instance;
 
 class _HomeState extends State<Home> {
   int _currentIndex = 1;
@@ -20,6 +24,18 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: Row(
+        children: [
+          TextButton(
+              onPressed: () {
+                auth.signOut();
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
+              child: Text('Logout')),
+        ],
+      )),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
