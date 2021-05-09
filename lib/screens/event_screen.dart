@@ -1,3 +1,4 @@
+import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
 
 class EventPage extends StatefulWidget {
@@ -15,8 +16,7 @@ class _EventPage extends State<EventPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildButtonColumn(color, Icons.check_circle_outline, 'Going'),
-          _buildButtonColumn(
-              color, Icons.not_listed_location_outlined, 'Interested'),
+          _buildButtonColumn(color, Icons.not_listed_location_outlined, 'Interested'),
           _buildButtonColumn(color, Icons.cancel_outlined, 'Not Going'),
         ],
       ),
@@ -64,11 +64,11 @@ class _EventPage extends State<EventPage> {
               'Friends going'),
             style: ButtonStyle(
               padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.red),
+              foregroundColor: MaterialStateProperty.all<Color>(color),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.red)
+                  side: BorderSide(color: color)
                 )
               )
             ),
@@ -78,12 +78,12 @@ class _EventPage extends State<EventPage> {
             child: Text(
               '+ Invite'),
             style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+              foregroundColor: MaterialStateProperty.all<Color>(WhiteGrey),
+              backgroundColor: MaterialStateProperty.all<Color>(color),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.red)
+                  side: BorderSide(color: color)
                 )
               )
             ),
