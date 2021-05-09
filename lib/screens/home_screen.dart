@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'placeholder.dart';
 import 'package:circles/theme.dart';
 import 'explore.dart';
+import 'package:circles/screens/event_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -46,12 +47,11 @@ class _HomeState extends State<Home> {
           onTap: onTabTapped,
           items: [
             BottomNavigationBarItem(
-                icon: new Icon(Icons.search), title: new Text('Explore')),
+                icon: new Icon(Icons.search), label: 'Explore'),
             BottomNavigationBarItem(
-                icon: new Icon(Icons.home), title: new Text('Your Events')),
+                icon: new Icon(Icons.home), label: 'Your Events'),
             BottomNavigationBarItem(
-                icon: new Icon(Icons.chat_bubble_outline),
-                title: new Text('Messages'))
+                icon: new Icon(Icons.chat_bubble_outline), label: 'Messages')
           ]),
     );
   }
