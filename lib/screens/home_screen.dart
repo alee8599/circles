@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'placeholder.dart';
 import 'package:circles/theme.dart';
 import 'explore.dart';
+import 'package:circles/screens/event_screen.dart';
 
 class Home extends StatefulWidget {
   @override
