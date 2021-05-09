@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'package:circles/components/event_card.dart';
+
+import '../models/event.dart';
 
 class PlaceHolder extends StatelessWidget {
   final Color color;
@@ -8,9 +11,8 @@ class PlaceHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      color: color,
-    ));
+    return Scaffold();
   }
 }
+
+//EventCard('event 1', 'host 1', 'test')

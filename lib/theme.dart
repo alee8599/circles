@@ -17,6 +17,10 @@ class MyTheme {
     return base.copyWith(
         accentColor: Green,
         primaryColor: RedOrange,
+        primaryTextTheme: base.textTheme.apply(
+            displayColor: GreyBlack,
+            bodyColor: GreyBlack,
+            decorationColor: GreyBlack),
         buttonTheme: base.buttonTheme.copyWith(buttonColor: Green),
         textSelectionColor: RedOrange,
         backgroundColor: Colors.white,

@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     Explore(),
     YourEvents(),
-    PlaceHolder(Colors.green)
+    PlaceHolder(Colors.blue)
   ];
 
   @override
@@ -38,6 +38,7 @@ class _HomeState extends State<Home> {
       )),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
           currentIndex: _currentIndex,
           showSelectedLabels: true,
           selectedItemColor: RedOrange,
@@ -46,12 +47,11 @@ class _HomeState extends State<Home> {
           onTap: onTabTapped,
           items: [
             BottomNavigationBarItem(
-                icon: new Icon(Icons.search), title: new Text('Explore')),
+                icon: new Icon(Icons.search), label: 'Explore'),
             BottomNavigationBarItem(
-                icon: new Icon(Icons.home), title: new Text('Your Events')),
+                icon: new Icon(Icons.home), label: 'Your Events'),
             BottomNavigationBarItem(
-                icon: new Icon(Icons.chat_bubble_outline),
-                title: new Text('Messages'))
+                icon: new Icon(Icons.chat_bubble_outline), label: 'Messages')
           ]),
     );
   }
