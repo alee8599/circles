@@ -13,7 +13,7 @@ class _EventListState extends State<EventList> {
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
         expand: true,
-        initialChildSize: 0.3,
+        initialChildSize: 0.31,
         minChildSize: 0.15,
         maxChildSize: 0.995,
         builder: (BuildContext context, ScrollController scrollController) {
