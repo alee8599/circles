@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:circles/theme.dart';
 import 'event_card.dart';
+import 'filters.dart';
 
 class EventList extends StatefulWidget {
   @override
@@ -13,26 +14,33 @@ class _EventListState extends State<EventList> {
     return DraggableScrollableSheet(
         expand: true,
         initialChildSize: 0.3,
-        minChildSize: 0.13,
-        maxChildSize: 0.95,
+        minChildSize: 0.15,
+        maxChildSize: 0.995,
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(
+            padding: EdgeInsets.only(top: 8.0),
             child: ListView.builder(
                 itemCount: 20,
                 controller: scrollController,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return Container(
-                      padding: EdgeInsets.all(3.0),
+                      padding: EdgeInsets.only(bottom: 3.0),
                       child: Image.asset(
                         'lib/assets/images/Rectangle 19.jpg',
                         height: 10,
                         width: 100.0,
                       ),
                     );
+                  } else if (index == 1) {
+                    return Container(
+                        padding:
+                            EdgeInsets.only(left: 10.0, top: 5.0, bottom: 3.0),
+                        child: Filters());
                   }
 
-                  return EventCard('event $index', 'host $index', 'test');
+                  return EventCard(
+                      'event ${index - 1}', 'host ${index - 1}', 'test');
                 }),
             decoration: BoxDecoration(
               color: Colors.white,

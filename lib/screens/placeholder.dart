@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/components/event_card.dart';
 import 'package:circles/screens/event_screen.dart';
+import 'package:circles/components/filters.dart';
 
 import '../models/event.dart';
 
@@ -12,7 +13,7 @@ class PlaceHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: EventPage());
+    return Scaffold(body: Filters());
   }
 }
 

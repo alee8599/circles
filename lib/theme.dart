@@ -21,7 +21,7 @@ class MyTheme {
             displayColor: GreyBlack,
             bodyColor: GreyBlack,
             decorationColor: GreyBlack),
-        buttonTheme: base.buttonTheme.copyWith(buttonColor: Green),
+        buttonColor: Green,
         textSelectionColor: RedOrange,
         backgroundColor: Colors.white,
         textTheme: base.textTheme.apply(fontFamily: 'Kayak Sans'));
