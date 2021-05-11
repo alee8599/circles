@@ -29,12 +29,16 @@ class _HomeState extends State<Home> {
           title: Row(
         children: [
           TextButton(
-              onPressed: () {
-                auth.signOut();
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
-              },
-              child: Text('Logout')),
+            onPressed: () {
+              auth.signOut();
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => LoginScreen()));
+            },
+            child: Text('Logout'),
+            style: TextButton.styleFrom(
+              primary: Colors.black,
+            ),
+          ),
         ],
       )),
       body: _children[_currentIndex],
