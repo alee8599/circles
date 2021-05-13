@@ -73,16 +73,17 @@ class _CreateEventState extends State<CreateEvent> {
                 padding: EdgeInsets.only(top: 8.0, left: 8.0),
                 child: Text("Description", style: TextStyle(fontSize: 20.0))),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 40.0r),
-              child: TextField(
-                obscureText: true,
-              ),
+              padding: const EdgeInsets.only(left: 8.0, bottom: 40.0),
+              child: TextField(obscureText: true),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  child: Text('Create Event', style: TextStyle(fontSize: 30.0),),
+                  child: Text(
+                    'Create Event',
+                    style: TextStyle(fontSize: 30.0),
+                  ),
                   style: ElevatedButton.styleFrom(
                     primary: RedOrange,
                   ),
