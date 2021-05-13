@@ -10,15 +10,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
 import 'login.dart';
 
-class YourEvents extends StatefulWidget {
+class Events extends StatefulWidget {
+  bool public;
+
+  Events({this.public});
+
   @override
-  _YourEventsState createState() => _YourEventsState();
+  _EventsState createState() => _EventsState();
 }
 
 final auth = FirebaseAuth.instance;
 
-class _YourEventsState extends State<YourEvents>
-    with SingleTickerProviderStateMixin {
+class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
   @override
   List<Marker> allMarkers = [];
   Map<double, String> markerIds = {};
@@ -121,12 +124,15 @@ class _YourEventsState extends State<YourEvents>
           builder: (context, child) {
             double slide = rightSlide * _animationController.value;
 
-            return Stack(children: [DrawerMenu(), eventsStack(slide, context)]);
+            return Stack(children: [
+              DrawerMenu(),
+              eventsStack(slide, widget.public, context)
+            ]);
           }),
     );
   }
 
-  Transform eventsStack(double slide, BuildContext context) {
+  Transform eventsStack(double slide, bool public, BuildContext context) {
     return Transform(
         transform: Matrix4.identity()..translate(slide),
         alignment: Alignment.center,
@@ -161,7 +167,7 @@ class _YourEventsState extends State<YourEvents>
                       : Icon(Icons.close_rounded,
                           size: 50.0, color: Theme.of(context).primaryColor)),
             ),
-            EventList(),
+            EventList(public: public),
           ],
         ));
   }

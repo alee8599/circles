@@ -1,46 +1,25 @@
-import 'package:circles/screens/login.dart';
-import 'package:circles/screens/your_events.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:circles/screens/events.dart';
 import 'package:flutter/material.dart';
 import 'placeholder.dart';
 import 'package:circles/theme.dart';
 import 'explore.dart';
-import 'package:circles/screens/event_screen.dart';
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
-final auth = FirebaseAuth.instance;
-
 class _HomeState extends State<Home> {
   int _currentIndex = 1;
   final List<Widget> _children = [
-    Explore(),
-    YourEvents(),
+    Events(public: true),
+    Events(public: false),
     PlaceHolder(Colors.blue)
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Row(
-        children: [
-          TextButton(
-            onPressed: () {
-              auth.signOut();
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
-            },
-            child: Text('Logout'),
-            style: TextButton.styleFrom(
-              primary: Colors.black,
-            ),
-          ),
-        ],
-      )),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,
