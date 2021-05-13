@@ -29,7 +29,9 @@ class _YourEventsState extends State<YourEvents> {
     return Scaffold(
         body: Stack(children: [
       Container(
-        height: 400.0,
+        height: 0.85 *
+            (MediaQuery.of(context).size.height *
+                MediaQuery.of(context).devicePixelRatio),
         width: MediaQuery.of(context).size.width,
         child: GoogleMap(
           initialCameraPosition:

@@ -13,7 +13,7 @@ class PlaceHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Filters());
+    return Scaffold(backgroundColor: Colors.red);
   }
 }
 
