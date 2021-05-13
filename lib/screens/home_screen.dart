@@ -2,7 +2,6 @@ import 'package:circles/screens/events.dart';
 import 'package:flutter/material.dart';
 import 'placeholder.dart';
 import 'package:circles/theme.dart';
-import 'explore.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,7 +13,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     Events(public: true),
     Events(public: false),
-    PlaceHolder(Colors.blue)
+    PlaceHolder()
   ];
 
   @override
