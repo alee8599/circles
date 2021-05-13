@@ -1,4 +1,4 @@
-import 'package:circles/screens/login.dart';
+  import 'package:circles/screens/login.dart';
 import 'package:circles/screens/your_events.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     Explore(),
     YourEvents(),
-    PlaceHolder(Colors.blue)
+    PlaceHolder()
   ];
 
   @override
