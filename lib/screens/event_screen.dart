@@ -7,6 +7,8 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPage extends State<EventPage> {
+  int pressedButton = 0;
+
   @override
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
@@ -16,9 +18,9 @@ class _EventPage extends State<EventPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildButtonColumn(Green, Icons.check_circle_outline, 'Going'),
-          _buildButtonColumn(Grey, Icons.not_listed_location_outlined, 'Interested'),
-          _buildButtonColumn(Grey, Icons.cancel_outlined, 'Not Going'),
+          _buildButtonColumn(Green, Icons.check_circle_outline, 'Going', pressedButton, 0),
+          _buildButtonColumn(Yellow, Icons.not_listed_location_outlined, 'Interested', pressedButton, 1),
+          _buildButtonColumn(RedOrange, Icons.cancel_outlined, 'Not Going', pressedButton, 2),
         ],
       ),
     );
@@ -103,8 +105,6 @@ class _EventPage extends State<EventPage> {
           _buildButton(color, Icons.account_circle),
           _buildButton(color, Icons.account_circle),
           _buildButton(color, Icons.account_circle),
-          _buildButton(color, Icons.account_circle),
-          _buildButton(color, Icons.account_circle),
         ],
       )
     );
@@ -133,6 +133,9 @@ class _EventPage extends State<EventPage> {
             TitleSection,
             ButtonSection,
             AccountSection,
+            Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: Text("Alex and 10 others going", style: TextStyle(fontSize: 14.0))),
             DescriptionSection,
           ],
         ),
@@ -140,12 +143,21 @@ class _EventPage extends State<EventPage> {
     );
   }
 
-  Column _buildButtonColumn(Color color, IconData icon, String label) {
+  Column _buildButtonColumn(Color color, IconData icon, String label, int pressedNum, int index) {
+    bool pressed = pressedNum == index;
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, color: color, size:36),
+        IconButton(
+          icon: Icon(icon), 
+          color: pressed ? color : Grey, 
+          onPressed: () => {
+            setState(() {
+              pressedButton = index;
+            })
+          },
+        ),
         Container(
           margin: const EdgeInsets.only(top: 8),
           child: Text(
@@ -153,7 +165,7 @@ class _EventPage extends State<EventPage> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
-              color: color,
+              color: pressed ? color : Grey,
             ),
           ),
         ),
