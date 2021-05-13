@@ -12,12 +12,13 @@ class _EventPage extends State<EventPage> {
     Color color = Theme.of(context).primaryColor;
 
     Widget ResponseSection = Container(
+      padding: EdgeInsets.all(24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildButtonColumn(color, Icons.check_circle_outline, 'Going'),
-          _buildButtonColumn(color, Icons.not_listed_location_outlined, 'Interested'),
-          _buildButtonColumn(color, Icons.cancel_outlined, 'Not Going'),
+          _buildButtonColumn(Green, Icons.check_circle_outline, 'Going'),
+          _buildButtonColumn(Grey, Icons.not_listed_location_outlined, 'Interested'),
+          _buildButtonColumn(Grey, Icons.cancel_outlined, 'Not Going'),
         ],
       ),
     );
@@ -90,6 +91,7 @@ class _EventPage extends State<EventPage> {
           )
         ],
       ),
+      padding: const EdgeInsets.only(bottom: 20),
     );
 
     Widget AccountSection = Container(
@@ -117,10 +119,11 @@ class _EventPage extends State<EventPage> {
     );
 
     return MaterialApp(
-      //title: 'Welcome to Flutter',
+      //title: 'Welcome to Flutter',s
       home: Scaffold(
         appBar: AppBar(
           title: Text('Fountain Hopping'),
+          backgroundColor: RedOrange,
         ),
         body: Column(
           children: [
@@ -142,13 +145,13 @@ class _EventPage extends State<EventPage> {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, color: color),
+        Icon(icon, color: color, size:36),
         Container(
           margin: const EdgeInsets.only(top: 8),
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 18,
               fontWeight: FontWeight.w400,
               color: color,
             ),
