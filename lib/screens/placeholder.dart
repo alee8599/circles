@@ -6,8 +6,6 @@ import 'package:circles/components/recent_chats.dart';
 import '../models/event.dart';
 
 class PlaceHolder extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
