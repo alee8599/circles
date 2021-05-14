@@ -20,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         body: Column(
           children: [
+            Image.asset('lib/assets/images/circles_loginscreen.png',
+                fit: BoxFit.cover, width: double.infinity),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
@@ -36,6 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 obscureText: true,
+                obscuringCharacter: '*',
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(hintText: 'Password'),
                 onChanged: (value) {
                   setState(() {
@@ -44,20 +48,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                    child: Text('Sign in'),
-                    style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).accentColor),
-                    onPressed: () => _signin(_email, _password)),
-                ElevatedButton(
-                    child: Text('Sign up'),
-                    style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).accentColor),
-                    onPressed: () => _signup(_email, _password))
-              ],
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ConstrainedBox(
+                    constraints:
+                        BoxConstraints.tightFor(width: 150, height: 50),
+                    child: ElevatedButton(
+                        child: Text('Sign in'),
+                        style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context).accentColor,
+                            textStyle: TextStyle(fontSize: 20, inherit: false)),
+                        onPressed: () => _signin(_email, _password)),
+                  ),
+                  ConstrainedBox(
+                      constraints:
+                          BoxConstraints.tightFor(width: 150, height: 50),
+                      child: ElevatedButton(
+                          child: Text('Sign up'),
+                          style: ElevatedButton.styleFrom(
+                              primary: Theme.of(context).accentColor,
+                              textStyle:
+                                  TextStyle(fontSize: 20, inherit: false)),
+                          onPressed: () => _signup(_email, _password)))
+                ],
+              ),
             )
           ],
         ));
