@@ -139,6 +139,12 @@ class _EventPage extends State<EventPage> {
         appBar: AppBar(
           title: Text('Fountain Hopping', style: TextStyle(fontSize:24.0)),
           backgroundColor: RedOrange,
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: WhiteGrey,
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         body: SingleChildScrollView(
           child: Column(
