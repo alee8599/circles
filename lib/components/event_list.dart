@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:circles/theme.dart';
 import 'event_card.dart';
 import 'filters.dart';
+import 'package:circles/screens/create_event.dart';
 
 class EventList extends StatefulWidget {
   bool public;
@@ -113,7 +114,12 @@ class LogoButton extends StatelessWidget {
                       fontSize: 45,
                       fontWeight: FontWeight.bold)),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CreateEvent()),
+                  );
+                },
                 child: Icon(Icons.add, color: Colors.white),
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(Yellow)),

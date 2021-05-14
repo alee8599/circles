@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:circles/screens/event_screen.dart';
+import 'package:circles/screens/single_event_screen.dart';
 
 class EventCard extends StatelessWidget {
   final String eventName;

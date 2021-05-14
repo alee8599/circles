@@ -2,6 +2,7 @@ import 'package:circles/screens/events.dart';
 import 'package:flutter/material.dart';
 import 'placeholder.dart';
 import 'package:circles/theme.dart';
+import 'dart:math';
 
 class Home extends StatefulWidget {
   @override
@@ -32,7 +33,9 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
                 icon: new Icon(Icons.search), label: 'Explore'),
             BottomNavigationBarItem(
-                icon: new Icon(Icons.home), label: 'Your Events'),
+                icon: Transform.rotate(
+                    angle: -pi / 4, child: new Icon(Icons.campaign_rounded)),
+                label: 'Your Events'),
             BottomNavigationBarItem(
                 icon: new Icon(Icons.chat_bubble_outline), label: 'Messages')
           ]),
