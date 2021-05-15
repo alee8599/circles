@@ -1,9 +1,9 @@
 import 'package:circles/models/user_model.dart';
 
 class Message {
-  final User sender;
+  final CirclesUser sender;
   final String
-  time; // Would usually be type DateTime or Firebase Timestamp in production apps
+      time; // Would usually be type DateTime or Firebase Timestamp in production apps
   final String text;
   final bool isLiked;
   final bool unread;
@@ -18,51 +18,51 @@ class Message {
 }
 
 // YOU - current user
-final User currentUser = User(
-  id: 0,
+final CirclesUser currentUser = CirclesUser(
+  id: '0',
   name: 'Current User',
-  imageUrl: 'assets/images/penguin.jpg',
+  imageUrl: 'lib/assets/images/penguin.jpg',
 );
 
 // USERS
-final User greg = User(
-  id: 1,
+final CirclesUser greg = CirclesUser(
+  id: '1',
   name: 'Greg',
-  imageUrl: 'assets/images/penguin.jpg',
+  imageUrl: 'lib/assets/images/penguin.jpg',
 );
-final User james = User(
-  id: 2,
+final CirclesUser james = CirclesUser(
+  id: '2',
   name: 'James',
-  imageUrl: 'assets/images/penguin.jpg',
+  imageUrl: 'lib/assets/images/penguin.jpg',
 );
-final User john = User(
-  id: 3,
+final CirclesUser john = CirclesUser(
+  id: '3',
   name: 'John',
-  imageUrl: 'assets/images/penguin.jpg',
+  imageUrl: 'lib/assets/images/penguin.jpg',
 );
-final User olivia = User(
-  id: 4,
+final CirclesUser olivia = CirclesUser(
+  id: '4',
   name: 'Olivia',
-  imageUrl: 'assets/images/penguin.jpg',
+  imageUrl: 'lib/assets/images/penguin.jpg',
 );
-final User sam = User(
-  id: 5,
+final CirclesUser sam = CirclesUser(
+  id: '5',
   name: 'Sam',
-  imageUrl: 'assets/images/penguin.jpg',
+  imageUrl: 'lib/assets/images/penguin.jpg',
 );
-final User sophia = User(
-  id: 6,
+final CirclesUser sophia = CirclesUser(
+  id: '6',
   name: 'Sophia',
-  imageUrl: 'assets/images/penguin.jpg',
+  imageUrl: 'lib/assets/images/penguin.jpg',
 );
-final User steven = User(
-  id: 7,
+final CirclesUser steven = CirclesUser(
+  id: '7',
   name: 'Steven',
-  imageUrl: 'assets/images/penguin.jpg',
+  imageUrl: 'lib/assets/images/penguin.jpg',
 );
 
 // FAVORITE CONTACTS
-List<User> favorites = [sam, steven, olivia, john, greg];
+List<CirclesUser> favorites = [sam, steven, olivia, john, greg];
 
 // EXAMPLE CHATS ON HOME SCREEN
 List<Message> chats = [

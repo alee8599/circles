@@ -20,8 +20,8 @@ class _EventPage extends State<EventPage> {
         children: [
           _buildButtonColumn(
               Green, Icons.check_circle_outline, 'Going', pressedButton, 0),
-          _buildButtonColumn(
-            Yellow, Icons.not_listed_location_outlined, 'Interested', pressedButton, 1),
+          _buildButtonColumn(Yellow, Icons.not_listed_location_outlined,
+              'Interested', pressedButton, 1),
           _buildButtonColumn(
               RedOrange, Icons.cancel_outlined, 'Not Going', pressedButton, 2),
         ],
@@ -126,10 +126,9 @@ class _EventPage extends State<EventPage> {
         'Come hangout and have fun during this week!'
         'Event will be chill and feel free to invite friends!',
         softWrap: true,
-        style: 
-          TextStyle(
-            fontSize: 16.0,
-          ),
+        style: TextStyle(
+          fontSize: 16.0,
+        ),
       ),
     );
 
@@ -137,7 +136,7 @@ class _EventPage extends State<EventPage> {
       //title: 'Welcome to Flutter',s
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Fountain Hopping', style: TextStyle(fontSize:24.0)),
+          title: Text('Fountain Hopping', style: TextStyle(fontSize: 24.0)),
           backgroundColor: RedOrange,
           automaticallyImplyLeading: true,
           leading: IconButton(
@@ -148,20 +147,20 @@ class _EventPage extends State<EventPage> {
         ),
         body: SingleChildScrollView(
           child: Column(
-          children: [
-            Image.asset('lib/assets/images/fountain.jpg',
-                fit: BoxFit.cover, width: double.infinity),
-            ResponseSection,
-            TitleSection,
-            ButtonSection,
-            AccountSection,
-            Padding(
-                padding: EdgeInsets.only(top: 16.0),
-                child: Text("Alex and 10 others going",
-                    style: TextStyle(fontSize: 20.0))),
-            DescriptionSection,
-          ],
-        ),
+            children: [
+              Image.asset('lib/assets/images/fountain.jpg',
+                  fit: BoxFit.cover, width: double.infinity),
+              ResponseSection,
+              TitleSection,
+              ButtonSection,
+              AccountSection,
+              Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Text("Alex and 10 others going",
+                      style: TextStyle(fontSize: 20.0))),
+              DescriptionSection,
+            ],
+          ),
         ),
       ),
     );
@@ -178,9 +177,12 @@ class _EventPage extends State<EventPage> {
           icon: Icon(icon, size: 40.0),
           color: pressed ? color : Grey,
           onPressed: () => {
-            setState(() {
-              pressedButton = index;
-            })
+            if (mounted)
+              {
+                setState(() {
+                  pressedButton = index;
+                })
+              }
           },
         ),
         Container(
@@ -203,7 +205,7 @@ class _EventPage extends State<EventPage> {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, color: color, size:60),
+        Icon(icon, color: color, size: 60),
       ],
     );
   }

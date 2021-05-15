@@ -1,3 +1,4 @@
+import 'package:circles/models/auth_service.dart';
 import 'package:circles/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,9 +54,11 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
     if (list == null) {
       print("unable to retrieve marker list");
     } else {
-      setState(() {
-        allMarkers = list;
-      });
+      if (mounted) {
+        setState(() {
+          allMarkers = list;
+        });
+      }
     }
   }
 
@@ -116,6 +119,11 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
 
 //    print('all markers');
 //    print(allMarkers);
+
+//    AuthenticationService _authService = new AuthenticationService();
+// note: this is always null :(
+//    print(_authService.currentUser);
+
     final rightSlide = MediaQuery.of(context).size.width * 0.6;
 
     return SafeArea(
@@ -152,9 +160,11 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
             GestureDetector(
               onTap: () {
                 _toggleAnimation();
-                setState(() {
-                  icon = !icon;
-                });
+                if (mounted) {
+                  setState(() {
+                    icon = !icon;
+                  });
+                }
               },
               child: Container(
                   padding: EdgeInsets.only(top: 20.0, left: 10.0),

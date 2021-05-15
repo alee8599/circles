@@ -3,7 +3,7 @@ import 'package:circles/models/message_model.dart';
 import 'package:circles/models/user_model.dart';
 
 class ChatScreen extends StatefulWidget {
-  final User user;
+  final CirclesUser user;
 
   ChatScreen({this.user});
 
@@ -16,27 +16,27 @@ class _ChatScreenState extends State<ChatScreen> {
     final Container msg = Container(
       margin: isMe
           ? EdgeInsets.only(
-        top: 8.0,
-        bottom: 8.0,
-        left: 80.0,
-      )
+              top: 8.0,
+              bottom: 8.0,
+              left: 80.0,
+            )
           : EdgeInsets.only(
-        top: 8.0,
-        bottom: 8.0,
-      ),
+              top: 8.0,
+              bottom: 8.0,
+            ),
       padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
       width: MediaQuery.of(context).size.width * 0.75,
       decoration: BoxDecoration(
         color: isMe ? Theme.of(context).accentColor : Color(0xFFFFEFEE),
         borderRadius: isMe
             ? BorderRadius.only(
-          topLeft: Radius.circular(15.0),
-          bottomLeft: Radius.circular(15.0),
-        )
+                topLeft: Radius.circular(15.0),
+                bottomLeft: Radius.circular(15.0),
+              )
             : BorderRadius.only(
-          topRight: Radius.circular(15.0),
-          bottomRight: Radius.circular(15.0),
-        ),
+                topRight: Radius.circular(15.0),
+                bottomRight: Radius.circular(15.0),
+              ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
