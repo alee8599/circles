@@ -14,7 +14,7 @@ class _EventPage extends State<EventPage> {
     Color color = Theme.of(context).primaryColor;
 
     Widget ResponseSection = Container(
-      //padding: EdgeInsets.all(24),
+      padding: EdgeInsets.only(top:16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -172,7 +172,7 @@ class _EventPage extends State<EventPage> {
       Color color, IconData icon, String label, int pressedNum, int index) {
     bool pressed = pressedNum == index;
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      //mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
@@ -188,7 +188,7 @@ class _EventPage extends State<EventPage> {
           },
         ),
         Container(
-          margin: EdgeInsets.only(top: 8, left: 8),
+          margin: EdgeInsets.only(top: 8, left: 9),
           child: Text(
             label,
             style: TextStyle(
