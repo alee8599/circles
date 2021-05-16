@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:circles/screens/single_event_screen.dart';
+import 'package:circles/models/event.dart';
 
 class EventCard extends StatelessWidget {
-  final String eventName;
-  final String eventHost;
-  final String othersText;
+  final Event event;
 
-  EventCard(this.eventName, this.eventHost, this.othersText);
+  EventCard(this.event);
 
   @override
   Widget build(BuildContext context) {
+    final String eventName = event.name;
+    final String eventHost = event.host;
+    final String othersText = 'test';
+
     return Container(
       height: 120.0,
       child: GestureDetector(

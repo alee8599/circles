@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
 import 'login.dart';
+import 'package:circles/screens/create_event.dart';
 
 class Events extends StatefulWidget {
   bool public;
@@ -23,6 +24,8 @@ class Events extends StatefulWidget {
 final auth = FirebaseAuth.instance;
 
 class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
+  bool top = false;
+
   @override
   List<Marker> allMarkers = [];
   Map<double, String> markerIds = {};
@@ -157,37 +160,89 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
                 markers: Set.from(allMarkers),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                _toggleAnimation();
-                if (mounted) {
-                  setState(() {
-                    icon = !icon;
-                  });
-                }
-              },
-              child: Container(
-                  padding: EdgeInsets.only(top: 20.0, left: 10.0),
-                  child: icon
-                      ? SvgPicture.asset(
-                          'lib/assets/SVGs/Menu SVG.svg',
-                          color: Theme.of(context).primaryColor,
-                          semanticsLabel: 'Menu Icon',
+            EventList(
+                public: public,
+                top: (bool input) => {
+                      setState(() {
+                        top = input;
+                      })
+                    }),
+            AnimatedCrossFade(
+              duration: const Duration(milliseconds: 150),
+              firstChild: Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('circles',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 45,
+                                fontWeight: FontWeight.bold)),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateEvent()),
+                            );
+                          },
+                          child: Icon(Icons.add, color: Colors.white),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Yellow)),
                         )
-                      : Icon(Icons.close_rounded,
-                          size: 50.0, color: Theme.of(context).primaryColor)),
+                      ])),
+              secondChild: Container(
+                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            _toggleAnimation();
+                            if (mounted) {
+                              setState(() {
+                                icon = !icon;
+                              });
+                            }
+                          },
+                          child: Container(
+                              padding: EdgeInsets.only(top: 7.0),
+                              child: icon
+                                  ? SvgPicture.asset(
+                                      'lib/assets/SVGs/Menu SVG.svg',
+                                      color: Theme.of(context).primaryColor,
+                                      semanticsLabel: 'Menu Icon',
+                                    )
+                                  : Icon(Icons.close_rounded,
+                                      size: 50.0,
+                                      color: Theme.of(context).primaryColor)),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateEvent()),
+                            );
+                          },
+                          child: Icon(Icons.add, color: Colors.white),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Yellow)),
+                        )
+                      ])),
+              crossFadeState:
+                  top ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             ),
-            EventList(public: public),
           ],
         ));
   }
 }
 
 class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

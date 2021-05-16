@@ -1,13 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/theme.dart';
 import 'event_card.dart';
+import 'dart:convert';
 import 'filters.dart';
-import 'package:circles/screens/create_event.dart';
+import 'package:circles/models/event.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventList extends StatefulWidget {
   bool public;
+  final Function top;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  EventList({this.public});
+  EventList({this.public, this.top});
 
   @override
   _EventListState createState() => _EventListState();
@@ -15,56 +20,82 @@ class EventList extends StatefulWidget {
 
 class _EventListState extends State<EventList> {
   bool top = false;
+  Future<QuerySnapshot<Object>> _eventsFuture;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _eventsFuture = widget.firestore.collection('events').get();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<DraggableScrollableNotification>(
-      // ignore: missing_return
-      onNotification: (notification) {
-        if (notification.extent > .85) {
-          setState(() {
-            if (!top) top = true;
-          });
-        } else if (top) top = false;
-      },
-      child: DraggableScrollableSheet(
-          initialChildSize: 0.31,
-          minChildSize: 0.13,
-          maxChildSize: 1.0,
-          builder: (BuildContext context, ScrollController scrollController) {
-            return Container(
-              padding: EdgeInsets.only(top: 8.0),
-              child: ListView.builder(
-                  itemCount: 20,
-                  controller: scrollController,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == 0) {
-                      return Header(top: top);
-                    }
-                    return EventCard(
-                        'event ${index - 1}', 'host ${index - 1}', 'test');
+    return FutureBuilder<QuerySnapshot>(
+        future: _eventsFuture,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            var eventlist = snapshot.data.docs;
+            return NotificationListener<DraggableScrollableNotification>(
+              // ignore: missing_return
+              onNotification: (notification) {
+                if (notification.extent > .9) {
+                  setState(() {
+                    top = true;
+                  });
+                  widget.top(true);
+                  return;
+                }
+                setState(() {
+                  top = false;
+                });
+                widget.top(false);
+              },
+              child: DraggableScrollableSheet(
+                  initialChildSize: 0.31,
+                  minChildSize: 0.13,
+                  maxChildSize: (MediaQuery.of(context).size.height - 60.0) /
+                      MediaQuery.of(context).size.height,
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
+                    return Container(
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: ListView.builder(
+                          itemCount: eventlist.length + 1,
+                          controller: scrollController,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index == 0) {
+                              return Header(top: top);
+                            }
+                            Event event = Event.fromData(eventlist[index - 1]);
+                            return EventCard(event);
+                          }),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: top
+                            ? BorderRadius.only(
+                                topRight: Radius.circular(7.5),
+                                topLeft: Radius.circular(7.5))
+                            : BorderRadius.only(
+                                topRight: Radius.circular(15),
+                                topLeft: Radius.circular(15)),
+                      ),
+                    );
                   }),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: top
-                    ? BorderRadius.only(
-                        topRight: Radius.circular(7.5),
-                        topLeft: Radius.circular(7.5))
-                    : BorderRadius.only(
-                        topRight: Radius.circular(15),
-                        topLeft: Radius.circular(15)),
-              ),
             );
-          }),
-    );
+          }
+          print('here');
+
+          return Container(color: Colors.red);
+          /*eventlist.forEach((doc) {
+            //print(doc.toString());
+          });*/
+        });
   }
 }
 
 class Header extends StatelessWidget {
-  const Header({
-    Key key,
-    @required this.top,
-  }) : super(key: key);
+  Header({this.top});
 
   final bool top;
 
@@ -75,7 +106,7 @@ class Header extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(bottom: 3.0),
           child: AnimatedCrossFade(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 250),
             firstChild: Center(
               child: Image.asset(
                 'lib/assets/images/Rectangle 19.jpg',
@@ -83,7 +114,7 @@ class Header extends StatelessWidget {
                 width: 100.0,
               ),
             ),
-            secondChild: LogoButton(),
+            secondChild: SizedBox(height: 5.0),
             crossFadeState:
                 top ? CrossFadeState.showSecond : CrossFadeState.showFirst,
           ),
@@ -93,37 +124,5 @@ class Header extends StatelessWidget {
             child: Filters())
       ],
     );
-  }
-}
-
-class LogoButton extends StatelessWidget {
-  const LogoButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text('circles',
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 45,
-                      fontWeight: FontWeight.bold)),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CreateEvent()),
-                  );
-                },
-                child: Icon(Icons.add, color: Colors.white),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Yellow)),
-              )
-            ]));
   }
 }

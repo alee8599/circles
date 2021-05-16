@@ -18,89 +18,100 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Login'),
-        ),
-        body: Column(
-          children: [
-            Image.asset('lib/assets/images/circles_loginscreen.png',
-                fit: BoxFit.cover, width: double.infinity),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                    hintText: 'First and Last Name (only used for sign-up)'),
-                onChanged: (value) {
-                  if (mounted) {
-                    setState(() {
-                      _name = value.trim();
-                    });
-                  }
-                },
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Column(
+            children: [
+              SizedBox(
+                height: 20.0,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(hintText: 'Email'),
-                onChanged: (value) {
-                  if (mounted) {
-                    setState(() {
-                      _email = value.trim();
-                    });
-                  }
-                },
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Image.asset(
+                      'lib/assets/images/circles_loginscreen.png',
+                      fit: BoxFit.cover,
+                      width: double.infinity),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                obscureText: true,
-                obscuringCharacter: '*',
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(hintText: 'Password'),
-                onChanged: (value) {
-                  if (mounted) {
-                    setState(() {
-                      _password = value.trim();
-                    });
-                  }
-                },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      hintText: 'First and Last Name (only used for sign-up)'),
+                  onChanged: (value) {
+                    if (mounted) {
+                      setState(() {
+                        _name = value.trim();
+                      });
+                    }
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ConstrainedBox(
-                    constraints:
-                        BoxConstraints.tightFor(width: 150, height: 50),
-                    child: ElevatedButton(
-                        child: Text('Sign in'),
-                        style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).accentColor,
-                            textStyle: TextStyle(fontSize: 20, inherit: false)),
-                        onPressed: () => _signin(_email, _password)),
-                  ),
-                  ConstrainedBox(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(hintText: 'Email'),
+                  onChanged: (value) {
+                    if (mounted) {
+                      setState(() {
+                        _email = value.trim();
+                      });
+                    }
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  obscureText: true,
+                  obscuringCharacter: '*',
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(hintText: 'Password'),
+                  onChanged: (value) {
+                    if (mounted) {
+                      setState(() {
+                        _password = value.trim();
+                      });
+                    }
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ConstrainedBox(
                       constraints:
                           BoxConstraints.tightFor(width: 150, height: 50),
                       child: ElevatedButton(
-                          child: Text('Sign up'),
+                          child: Text('Sign in'),
                           style: ElevatedButton.styleFrom(
                               primary: Theme.of(context).accentColor,
                               textStyle:
                                   TextStyle(fontSize: 20, inherit: false)),
-                          onPressed: () => _signup(_email, _password)))
-                ],
-              ),
-            )
-          ],
-        ));
+                          onPressed: () => _signin(_email, _password)),
+                    ),
+                    ConstrainedBox(
+                        constraints:
+                            BoxConstraints.tightFor(width: 150, height: 50),
+                        child: ElevatedButton(
+                            child: Text('Sign up'),
+                            style: ElevatedButton.styleFrom(
+                                primary: Theme.of(context).accentColor,
+                                textStyle:
+                                    TextStyle(fontSize: 20, inherit: false)),
+                            onPressed: () => _signup(_email, _password)))
+                  ],
+                ),
+              )
+            ],
+          )),
+    );
   }
 
   _signin(String _email, String _password) async {
@@ -139,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
             imageUrl: 'lib/assets/images/penguin.jpg'));
         return authResult.user != null;
       } catch (e) {
+        print('here');
         print(e);
       }
 

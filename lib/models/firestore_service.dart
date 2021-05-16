@@ -11,7 +11,7 @@ class FirestoreService {
 
       await _usersCollectionReference.doc(user.id).set(user.toJson());
     } catch (e) {
-      return e.message;
+      throw '';
     }
   }
 

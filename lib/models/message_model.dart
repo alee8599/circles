@@ -19,47 +19,47 @@ class Message {
 
 // YOU - current user
 final CirclesUser currentUser = CirclesUser(
-  id: '0',
-  name: 'Current User',
-  imageUrl: 'lib/assets/images/penguin.jpg',
-);
+    id: '0',
+    name: 'Current User',
+    imageUrl: 'lib/assets/images/penguin.jpg',
+    email: 'test@email.com');
 
 // USERS
 final CirclesUser greg = CirclesUser(
-  id: '1',
-  name: 'Greg',
-  imageUrl: 'lib/assets/images/penguin.jpg',
-);
+    id: '1',
+    name: 'Greg',
+    imageUrl: 'lib/assets/images/penguin.jpg',
+    email: 'test@email.com');
 final CirclesUser james = CirclesUser(
-  id: '2',
-  name: 'James',
-  imageUrl: 'lib/assets/images/penguin.jpg',
-);
+    id: '2',
+    name: 'James',
+    imageUrl: 'lib/assets/images/penguin.jpg',
+    email: 'test@email.com');
 final CirclesUser john = CirclesUser(
-  id: '3',
-  name: 'John',
-  imageUrl: 'lib/assets/images/penguin.jpg',
-);
+    id: '3',
+    name: 'John',
+    imageUrl: 'lib/assets/images/penguin.jpg',
+    email: 'test@email.com');
 final CirclesUser olivia = CirclesUser(
-  id: '4',
-  name: 'Olivia',
-  imageUrl: 'lib/assets/images/penguin.jpg',
-);
+    id: '4',
+    name: 'Olivia',
+    imageUrl: 'lib/assets/images/penguin.jpg',
+    email: 'test@email.com');
 final CirclesUser sam = CirclesUser(
-  id: '5',
-  name: 'Sam',
-  imageUrl: 'lib/assets/images/penguin.jpg',
-);
+    id: '5',
+    name: 'Sam',
+    imageUrl: 'lib/assets/images/penguin.jpg',
+    email: 'test@email.com');
 final CirclesUser sophia = CirclesUser(
-  id: '6',
-  name: 'Sophia',
-  imageUrl: 'lib/assets/images/penguin.jpg',
-);
+    id: '6',
+    name: 'Sophia',
+    imageUrl: 'lib/assets/images/penguin.jpg',
+    email: 'test@email.com');
 final CirclesUser steven = CirclesUser(
-  id: '7',
-  name: 'Steven',
-  imageUrl: 'lib/assets/images/penguin.jpg',
-);
+    id: '7',
+    name: 'Steven',
+    imageUrl: 'lib/assets/images/penguin.jpg',
+    email: 'test@email.com');
 
 // FAVORITE CONTACTS
 List<CirclesUser> favorites = [sam, steven, olivia, john, greg];
