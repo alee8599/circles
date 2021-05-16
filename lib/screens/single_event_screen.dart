@@ -14,7 +14,7 @@ class _EventPage extends State<EventPage> {
     Color color = Theme.of(context).primaryColor;
 
     Widget ResponseSection = Container(
-      padding: EdgeInsets.all(24),
+      //padding: EdgeInsets.all(24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -45,6 +45,7 @@ class _EventPage extends State<EventPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 26.0,
+                      fontFamily: "Kayak Sans"
                     ),
                   ),
                 ),
@@ -53,6 +54,7 @@ class _EventPage extends State<EventPage> {
                   style: TextStyle(
                     color: Colors.grey[500],
                     fontSize: 18.0,
+                    fontFamily: "Kayak Sans"
                   ),
                 ),
               ],
@@ -136,7 +138,7 @@ class _EventPage extends State<EventPage> {
       //title: 'Welcome to Flutter',s
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Fountain Hopping', style: TextStyle(fontSize: 24.0)),
+          title: Text('Fountain Hopping', style: TextStyle(fontSize: 24.0, fontFamily: "Kayak Sans")),
           backgroundColor: RedOrange,
           automaticallyImplyLeading: true,
           leading: IconButton(
