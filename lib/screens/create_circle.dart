@@ -1,5 +1,7 @@
 import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:circles/models/circles.dart';
+import 'package:circles/models/firestore_service.dart';
 
 class CreateCircle extends StatefulWidget {
   @override
@@ -8,45 +10,77 @@ class CreateCircle extends StatefulWidget {
 
 class _CreateCircleState extends State<CreateCircle> {
   @override
+  List userIds;
+  Circles newCircle;
+
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFAFAFA),
+        backgroundColor: const Color(0xFAFAFA),
         appBar: AppBar(
-          title: Text(
+            title: Text(
           "Create Your Circle",
           textAlign: TextAlign.left,
-          style: TextStyle(color: Colors.white, fontSize: 30.0, fontFamily: "Kayak Sans"),
+          style: TextStyle(
+              color: Colors.white, fontSize: 30.0, fontFamily: "Kayak Sans"),
         )),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 20.0, bottom: 16.0),
-              child: Text(
-                "Create a group chat with your friends!",
-                style: TextStyle(
-                  fontSize: 24.0, 
-                ),
-              )),
+                padding: EdgeInsets.only(top: 20.0, bottom: 16.0),
+                child: Text(
+                  "Create a group chat with your friends!",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                  ),
+                )),
             Image.asset("lib/assets/images/circles_logo.jpg"),
-            
             Padding(
                 padding: EdgeInsets.only(top: 12.0),
-                child: Text("Name of Circles Group", style: TextStyle(fontSize: 20.0))),
+                child: Text("Name of Circles Group",
+                    style: TextStyle(fontSize: 20.0))),
             Padding(
               padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
               child: TextField(
-                decoration: InputDecoration( fillColor: WhiteGrey, filled: true)
-              ),
+                  decoration:
+                      InputDecoration(fillColor: WhiteGrey, filled: true),
+                  onChanged: (value) {
+                    if (mounted) {
+                      setState(() {
+                        newCircle.name = value.trim();
+                      });
+                    }
+                  }),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
+              child: TextField(
+                  decoration:
+                      InputDecoration(fillColor: WhiteGrey, filled: true)),
             ),
             Padding(
                 padding: EdgeInsets.only(top: 8.0),
                 child: Text("Description", style: TextStyle(fontSize: 20.0))),
             Padding(
+              padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
+              child: TextField(
+                  decoration:
+                      InputDecoration(fillColor: WhiteGrey, filled: true),
+                  onChanged: (value) {
+                    if (mounted) {
+                      setState(() {
+                        newCircle.description = value.trim();
+                      });
+                    }
+                  }),
+            ),
+            Padding(
               padding: const EdgeInsets.only(left: 8.0, bottom: 40.0),
               child: TextField(
-                decoration: InputDecoration( fillColor: WhiteGrey, filled: true, hintText: "(Optional)")
-              ),
+                  decoration: InputDecoration(
+                      fillColor: WhiteGrey,
+                      filled: true,
+                      hintText: "(Optional)")),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -60,15 +94,11 @@ class _CreateCircleState extends State<CreateCircle> {
                     primary: RedOrange,
                   ),
                   onPressed: () {
-                    print('Pressed');
+                    // TODO: Create some front-end to look up a user name & a given user ID and add them here
+                    // For now, I'll default to adding the user ID of "temp"
+                    newCircle.userIds.add('temp');
                   },
                 ),
-                // ElevatedButton(
-                //     child: Text('Sign up'),
-                //     style: ElevatedButton.styleFrom(
-                //         primary: Theme.of(context).accentColor),
-                //     //onPressed: () => _signup(_email, _password))
-                // )
               ],
             ),
             Padding(padding: EdgeInsets.only(bottom: 20.0)),
@@ -83,16 +113,17 @@ class _CreateCircleState extends State<CreateCircle> {
                   style: ElevatedButton.styleFrom(
                     primary: RedOrange,
                   ),
-                  onPressed: () {
-                    print('Pressed');
+                  onPressed: () async {
+                    // Push the circle we've created to Firebase
+                    FirestoreService _firestoreService = new FirestoreService();
+
+                    try {
+                      await _firestoreService.createCircles(newCircle);
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                 ),
-                // ElevatedButton(
-                //     child: Text('Sign up'),
-                //     style: ElevatedButton.styleFrom(
-                //         primary: Theme.of(context).accentColor),
-                //     //onPressed: () => _signup(_email, _password))
-                // )
               ],
             )
           ],
