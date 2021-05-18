@@ -24,7 +24,8 @@ class _CreateEventState extends State<CreateEvent> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Column(
+      body: SingleChildScrollView(
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -128,6 +129,8 @@ class _CreateEventState extends State<CreateEvent> {
             ],
           )
         ],
-      ));
+      )
+    ),
+    );
   }
 }
