@@ -11,7 +11,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final String eventName = event.name;
     final String eventHost = event.host;
-    final String othersText = 'test';
+    final String othersText = 'You and several others';
 
     return Container(
       height: 120.0,
@@ -33,7 +33,7 @@ class EventCard extends StatelessWidget {
                 width: 200.0,
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(6.0),
-                    child: Image.asset('lib/assets/images/Finished.jpg',
+                    child: Image.asset('lib/assets/images/fountain.jpg',
                         fit: BoxFit.cover)),
               ),
               Expanded(

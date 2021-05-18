@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:math';
 import 'login.dart';
 import 'package:circles/screens/create_event.dart';
+import 'package:circles/components/drawer.dart';
 
 class Events extends StatefulWidget {
   bool public;
@@ -120,13 +121,6 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     fetchMarkersList();
 
-//    print('all markers');
-//    print(allMarkers);
-
-//    AuthenticationService _authService = new AuthenticationService();
-// note: this is always null :(
-//    print(_authService.currentUser);
-
     final rightSlide = MediaQuery.of(context).size.width * 0.6;
 
     return SafeArea(
@@ -167,128 +161,79 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
                         top = input;
                       })
                     }),
-            AnimatedCrossFade(
-              duration: const Duration(milliseconds: 150),
-              firstChild: Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('circles',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 45,
-                                fontWeight: FontWeight.bold)),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CreateEvent()),
-                            );
-                          },
-                          child: Icon(Icons.add, color: Colors.white),
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Yellow)),
-                        )
-                      ])),
-              secondChild: Container(
-                  padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            _toggleAnimation();
-                            if (mounted) {
-                              setState(() {
-                                icon = !icon;
-                              });
-                            }
-                          },
-                          child: Container(
-                              padding: EdgeInsets.only(top: 7.0),
-                              child: icon
-                                  ? SvgPicture.asset(
-                                      'lib/assets/SVGs/Menu SVG.svg',
-                                      color: Theme.of(context).primaryColor,
-                                      semanticsLabel: 'Menu Icon',
-                                    )
-                                  : Icon(Icons.close_rounded,
-                                      size: 50.0,
-                                      color: Theme.of(context).primaryColor)),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CreateEvent()),
-                            );
-                          },
-                          child: Icon(Icons.add, color: Colors.white),
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Yellow)),
-                        )
-                      ])),
-              crossFadeState:
-                  top ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            ),
+            Header(context),
           ],
         ));
   }
-}
 
-class DrawerMenu extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: WhiteGrey,
-      body: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: <Widget>[
-        DrawerHeader(
-            child: Text('circles',
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 45,
-                    fontWeight: FontWeight.bold))),
-        ListTile(
-          onTap: () {},
-          title: Text('Profile',
-              style: TextStyle(
-                  fontSize: 25, color: Theme.of(context).primaryColor)),
-        ),
-        ListTile(
-          onTap: () {},
-          title: Text('Your Circles',
-              style: TextStyle(
-                  fontSize: 25, color: Theme.of(context).primaryColor)),
-        ),
-        ListTile(
-          onTap: () {},
-          title: Text('Settings',
-              style: TextStyle(
-                  fontSize: 25, color: Theme.of(context).primaryColor)),
-        ),
-        SizedBox(height: 40),
-        SizedBox(height: 40),
-        SizedBox(height: 40),
-        SizedBox(height: 40),
-        SizedBox(height: 20),
-        ListTile(
-          onTap: () {
-            auth.signOut();
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginScreen()));
-          },
-          title: Text('Logout',
-              style: TextStyle(
-                  color: Theme.of(context).primaryColor, fontSize: 30.0)),
-        )
-      ])),
+  AnimatedCrossFade Header(BuildContext context) {
+    return AnimatedCrossFade(
+      duration: const Duration(milliseconds: 150),
+      firstChild: Container(
+          color: Colors.white,
+          padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('circles',
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 45,
+                        fontWeight: FontWeight.bold)),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => CreateEvent()),
+                    );
+                  },
+                  child: Icon(Icons.add, color: Colors.white),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Yellow)),
+                )
+              ])),
+      secondChild: Container(
+          padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    _toggleAnimation();
+                    if (mounted) {
+                      setState(() {
+                        icon = !icon;
+                      });
+                    }
+                  },
+                  child: Container(
+                      padding: EdgeInsets.only(top: 7.0),
+                      child: icon
+                          ? SvgPicture.asset(
+                              'lib/assets/SVGs/Menu SVG.svg',
+                              color: Theme.of(context).primaryColor,
+                              semanticsLabel: 'Menu Icon',
+                            )
+                          : Icon(Icons.close_rounded,
+                              size: 50.0,
+                              color: Theme.of(context).primaryColor)),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CreateEvent()),
+                    );
+                  },
+                  child: Icon(Icons.add, color: Colors.white),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Yellow)),
+                )
+              ])),
+      crossFadeState:
+          top ? CrossFadeState.showFirst : CrossFadeState.showSecond,
     );
   }
 }

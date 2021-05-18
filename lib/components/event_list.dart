@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'filters.dart';
 import 'package:circles/models/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
 
 class EventList extends StatefulWidget {
   bool public;

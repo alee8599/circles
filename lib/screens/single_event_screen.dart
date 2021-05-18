@@ -14,7 +14,7 @@ class _EventPage extends State<EventPage> {
     Color color = Theme.of(context).primaryColor;
 
     Widget ResponseSection = Container(
-      padding: EdgeInsets.only(top:16),
+      padding: EdgeInsets.only(top: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -43,19 +43,17 @@ class _EventPage extends State<EventPage> {
                   child: Text(
                     'Fountain Hopping',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26.0,
-                      fontFamily: "Kayak Sans"
-                    ),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 26.0,
+                        fontFamily: "Kayak Sans"),
                   ),
                 ),
                 Text(
                   'Hosted by: John T.',
                   style: TextStyle(
-                    color: Colors.grey[500],
-                    fontSize: 18.0,
-                    fontFamily: "Kayak Sans"
-                  ),
+                      color: Colors.grey[500],
+                      fontSize: 18.0,
+                      fontFamily: "Kayak Sans"),
                 ),
               ],
             ),
@@ -138,7 +136,8 @@ class _EventPage extends State<EventPage> {
       //title: 'Welcome to Flutter',s
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Fountain Hopping', style: TextStyle(fontSize: 24.0, fontFamily: "Kayak Sans")),
+          title: Text('Fountain Hopping',
+              style: TextStyle(fontSize: 24.0, fontFamily: "Kayak Sans")),
           backgroundColor: RedOrange,
           automaticallyImplyLeading: true,
           leading: IconButton(
@@ -172,29 +171,30 @@ class _EventPage extends State<EventPage> {
       Color color, IconData icon, String label, int pressedNum, int index) {
     bool pressed = pressedNum == index;
     return Column(
-      //mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          icon: Icon(icon, size: 40.0),
-          color: pressed ? color : Grey,
-          onPressed: () => {
-            if (mounted)
-              {
-                setState(() {
-                  pressedButton = index;
-                })
-              }
-          },
+        Center(
+          child: IconButton(
+            icon: Icon(icon, size: 40.0),
+            color: pressed ? color : Grey,
+            onPressed: () => {
+              if (mounted)
+                {
+                  setState(() {
+                    pressedButton = index;
+                  })
+                }
+            },
+          ),
         ),
-        Container(
-          margin: EdgeInsets.only(top: 8, left: 9),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w400,
-              color: pressed ? color : Grey,
+        Center(
+          child: Container(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w400,
+                color: pressed ? color : Grey,
+              ),
             ),
           ),
         ),

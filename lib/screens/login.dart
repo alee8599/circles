@@ -31,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.all(10.0),
                   child: Image.asset(
                       'lib/assets/images/circles_loginscreen.png',
-                      fit: BoxFit.cover,
-                      width: double.infinity),
+                      fit: BoxFit.contain,
+                      width: MediaQuery.of(context).size.width),
                 ),
               ),
               Padding(

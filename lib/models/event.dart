@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
-  final String name;
-  final double latitude;
-  final double longitude;
-  final String host;
+  String name;
+  double latitude;
+  double longitude;
+  String host;
   //final DateTime dateTime; include after set up the json reading
-  final String description;
+  String description;
   //final List<String> participants;
 
   Event(
