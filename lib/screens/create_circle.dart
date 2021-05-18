@@ -23,7 +23,8 @@ class _CreateCircleState extends State<CreateCircle> {
           style: TextStyle(
               color: Colors.white, fontSize: 30.0, fontFamily: "Kayak Sans"),
         )),
-        body: Column(
+        body: SingleChildScrollView(
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
@@ -127,6 +128,8 @@ class _CreateCircleState extends State<CreateCircle> {
               ],
             )
           ],
-        ));
+        ),
+        ),
+        );
   }
 }
