@@ -57,7 +57,7 @@ class RecentChats extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                chat.sender.name,
+                                chat.chat_id,
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 15.0,
@@ -68,7 +68,7 @@ class RecentChats extends StatelessWidget {
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.45,
                                 child: Text(
-                                  chat.text,
+                                  chat.sender.name + ': ' + chat.text,
                                   style: TextStyle(
                                     color: Colors.blueGrey,
                                     fontSize: 15.0,
