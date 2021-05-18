@@ -1,7 +1,12 @@
 import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:circles/models/event.dart';
 
 class EventPage extends StatefulWidget {
+  Event event;
+
+  EventPage({this.event});
+
   @override
   _EventPage createState() => _EventPage();
 }
@@ -41,7 +46,7 @@ class _EventPage extends State<EventPage> {
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    'Fountain Hopping',
+                    widget.event.name,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 26.0,
@@ -49,7 +54,7 @@ class _EventPage extends State<EventPage> {
                   ),
                 ),
                 Text(
-                  'Hosted by: John T.',
+                  'Hosted by: ${widget.event.host}',
                   style: TextStyle(
                       color: Colors.grey[500],
                       fontSize: 18.0,
@@ -123,8 +128,7 @@ class _EventPage extends State<EventPage> {
       padding: const EdgeInsets.all(32),
       child: Text(
         'Description: '
-        'Come hangout and have fun during this week!'
-        'Event will be chill and feel free to invite friends!',
+        '${widget.event.description}',
         softWrap: true,
         style: TextStyle(
           fontSize: 16.0,
@@ -136,7 +140,7 @@ class _EventPage extends State<EventPage> {
       //title: 'Welcome to Flutter',s
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Fountain Hopping',
+          title: Text(widget.event.name,
               style: TextStyle(fontSize: 24.0, fontFamily: "Kayak Sans")),
           backgroundColor: RedOrange,
           automaticallyImplyLeading: true,

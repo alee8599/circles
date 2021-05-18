@@ -15,16 +15,16 @@ class _CreateCircleState extends State<CreateCircle> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFAFAFA),
-        appBar: AppBar(
-            title: Text(
-          "Create Your Circle",
-          textAlign: TextAlign.left,
-          style: TextStyle(
-              color: Colors.white, fontSize: 30.0, fontFamily: "Kayak Sans"),
-        )),
-        body: SingleChildScrollView(
-          child: Column(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+          title: Text(
+        "Create Your Circle",
+        textAlign: TextAlign.left,
+        style: TextStyle(
+            color: Colors.white, fontSize: 30.0, fontFamily: "Kayak Sans"),
+      )),
+      body: SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
@@ -129,7 +129,7 @@ class _CreateCircleState extends State<CreateCircle> {
             )
           ],
         ),
-        ),
-        );
+      ),
+    );
   }
 }

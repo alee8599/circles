@@ -19,7 +19,7 @@ class EventCard extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EventPage()),
+            MaterialPageRoute(builder: (context) => EventPage(event: event)),
           );
         },
         child: Card(
