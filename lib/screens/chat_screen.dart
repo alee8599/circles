@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:circles/models/message_model.dart';
 import 'package:circles/models/user_model.dart';
+import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
   final CirclesUser user;
-
   ChatScreen({this.user});
 
   @override
@@ -12,6 +12,22 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  String message = '';
+  var now = DateTime.now();
+  void sendMessage() {
+    setState(() {
+      // FocusScope.of(context).unfocus();
+      final Message msg = Message(
+        chat_id: 'Knitting Club',
+        sender: currentUser,
+        time: 'Today, ' + DateFormat('kk:mm').format(now),
+        text: message,
+        isLiked: false,
+        unread: false,
+      );
+      messages.insert(0, msg);
+    });
+  }
   _buildMessage(Message message, bool isMe) {
     final Container msg = Container(
       margin: isMe
@@ -42,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            message.sender.name + ' ' + message.time,
+            message.sender.name + ' - ' + message.time,
             style: TextStyle(
               color: Colors.blueGrey,
               fontSize: 16.0,
@@ -97,7 +113,9 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: TextField(
               textCapitalization: TextCapitalization.sentences,
-              onChanged: (value) {},
+              onChanged: (value) => setState(() {
+                    message = value;
+              }),
               decoration: InputDecoration.collapsed(
                 hintText: 'Send a message...',
               ),
@@ -107,7 +125,9 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: Icon(Icons.send),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () {},
+            onPressed: () {
+              sendMessage();
+            },
           ),
         ],
       ),
