@@ -2,6 +2,7 @@ import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/models/circles.dart';
 import 'package:circles/models/firestore_service.dart';
+import 'home_screen.dart';
 
 class CreateCircle extends StatefulWidget {
   @override
@@ -35,7 +36,11 @@ class _CreateCircleState extends State<CreateCircle> {
                     fontSize: 24.0,
                   ),
                 )),
-            Image.asset("lib/assets/images/circles_logo.jpg"),
+            Image.asset(
+              "lib/assets/images/circles_logo.jpg",
+              height: 200.0,
+              width: 200.0,
+            ),
             Padding(
                 padding: EdgeInsets.only(top: 12.0),
                 child: Text("Name of Circles Group",
@@ -54,12 +59,6 @@ class _CreateCircleState extends State<CreateCircle> {
                   }),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
-              child: TextField(
-                  decoration:
-                      InputDecoration(fillColor: WhiteGrey, filled: true)),
-            ),
-            Padding(
                 padding: EdgeInsets.only(top: 8.0),
                 child: Text("Description", style: TextStyle(fontSize: 20.0))),
             Padding(
@@ -74,14 +73,6 @@ class _CreateCircleState extends State<CreateCircle> {
                       });
                     }
                   }),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 40.0),
-              child: TextField(
-                  decoration: InputDecoration(
-                      fillColor: WhiteGrey,
-                      filled: true,
-                      hintText: "(Optional)")),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -123,6 +114,11 @@ class _CreateCircleState extends State<CreateCircle> {
                     } catch (e) {
                       print(e);
                     }
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
                   },
                 ),
               ],
