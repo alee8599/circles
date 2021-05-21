@@ -1,3 +1,5 @@
+import 'package:circles/models/circles.dart';
+import 'package:circles/models/firestore_service.dart';
 import 'package:circles/screens/events.dart';
 import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +23,13 @@ class _CreateEventState extends State<CreateEvent> {
   double lat = 39.4276;
   double long = -124.0;
 
-  Future<void> addEvent(Event newEvent) {
+  Future<void> addEvent(Event newEvent) async {
     print(newEvent.name);
     print(newEvent.host);
     print(newEvent.description);
     print(newEvent.latitude);
     print(newEvent.longitude);
+
     return FirebaseFirestore.instance
         .collection('events')
         .add(newEvent.toJson())
@@ -48,7 +51,9 @@ class _CreateEventState extends State<CreateEvent> {
               builder: (context) => PlacePicker(
                   "AIzaSyAWav5nFZB0k0hrEnwLk-WD-Yj780OoNg4",
                   displayLocation: LatLng(37.4276, -122.16))));
+      print('result of location picker');
       print(result.toString());
+
       var latlong;
       if (result != null) {
         latlong = result.latLng;

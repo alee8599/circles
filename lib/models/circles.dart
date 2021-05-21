@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Circles {
-  List userIds;
+  List<String> userIds;
   String id;
   String name;
   String description;
