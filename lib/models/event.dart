@@ -7,12 +7,17 @@ class Event {
   double latitude;
   double longitude;
   String host;
-  //final DateTime dateTime; include after set up the json reading
+  DateTime dateTime; //include after set up the json reading
   String description;
   //final List<String> participants;
 
   Event(
-      {this.name, this.latitude, this.longitude, this.host, this.description});
+      {this.name,
+      this.latitude,
+      this.longitude,
+      this.host,
+      this.description,
+      this.dateTime});
 
   Event.fromData(QueryDocumentSnapshot<Object> data)
       : this(
@@ -20,6 +25,7 @@ class Event {
           latitude: data.get('latitude').toDouble(),
           longitude: data.get('longitude').toDouble(),
           host: data.get('host').toString(),
+          dateTime: DateTime.parse(data.get('dateTime').toString()),
           description: data.get('description').toString(),
         );
 
@@ -29,11 +35,12 @@ class Event {
       'latitude': latitude,
       'longitude': longitude,
       'host': host,
-      'description': description
+      'dateTime': dateTime.toString(),
+      'description': description,
     };
   }
 
   String toString() {
-    return '$name + $latitude + $longitude + $host + $description';
+    return '$name + $latitude + $longitude + $host + ${dateTime.toString()} + $description';
   }
 }

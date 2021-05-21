@@ -54,7 +54,7 @@ List<Message> chats = [
   Message(
     chat_id: 'Knitting Club',
     sender: nandita,
-    time: '5:30 PM',
+    time: '17:30',
     text: 'Of course, see you all later!',
     isLiked: false,
     unread: true,
@@ -62,7 +62,7 @@ List<Message> chats = [
   Message(
     chat_id: 'Board Games',
     sender: john,
-    time: '4:30 PM',
+    time: '16:30',
     text: 'Of course, see you all later!',
     isLiked: false,
     unread: true,
@@ -70,7 +70,7 @@ List<Message> chats = [
   Message(
     chat_id: 'Hike the Dish',
     sender: alex,
-    time: '3:30 PM',
+    time: '15:30',
     text: 'Of course, see you all later!',
     isLiked: false,
     unread: false,
@@ -82,7 +82,7 @@ List<Message> messages = [
   Message(
     chat_id: 'Knitting Club',
     sender: nandita,
-    time: '5:30 PM',
+    time: 'May 03, 17:30',
     text: 'Of course, see you all later!',
     isLiked: true,
     unread: true,
@@ -90,7 +90,7 @@ List<Message> messages = [
   Message(
     chat_id: 'Knitting Club',
     sender: currentUser,
-    time: '4:30 PM',
+    time: 'May 03, 16:30',
     text: 'Bet. Sounds good!! Super excited to see you all.',
     isLiked: false,
     unread: true,
@@ -98,7 +98,7 @@ List<Message> messages = [
   Message(
     chat_id: 'Knitting Club',
     sender: alex,
-    time: '3:45 PM',
+    time: 'May 03, 15:30',
     text: 'Bringing drinks and snacks',
     isLiked: false,
     unread: true,
@@ -106,7 +106,7 @@ List<Message> messages = [
   Message(
     chat_id: 'Knitting Club',
     sender: ryan,
-    time: '3:15 PM',
+    time: 'May 03, 15:15',
     text: 'Lots of them',
     isLiked: true,
     unread: true,
@@ -114,7 +114,7 @@ List<Message> messages = [
   Message(
     chat_id: 'Knitting Club',
     sender: currentUser,
-    time: '2:30 PM',
+    time: 'May 03, 14:30',
     text: 'Nice! What kind of food did you get?',
     isLiked: false,
     unread: true,
@@ -122,7 +122,7 @@ List<Message> messages = [
   Message(
     chat_id: 'Knitting Club',
     sender: ryan,
-    time: '2:00 PM',
+    time: 'May 03, 14:00',
     text: 'I ordered the food.',
     isLiked: false,
     unread: true,

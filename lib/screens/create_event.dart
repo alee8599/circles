@@ -10,6 +10,8 @@ import 'package:place_picker/place_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'home_screen.dart';
+
 class CreateEvent extends StatefulWidget {
   @override
   _CreateEventState createState() => _CreateEventState();
@@ -18,7 +20,7 @@ class CreateEvent extends StatefulWidget {
 class _CreateEventState extends State<CreateEvent> {
   String hostName;
   String description;
-  String datetime;
+  DateTime datetime;
   String eventName;
   double lat = 39.4276;
   double long = -124.0;
@@ -28,6 +30,7 @@ class _CreateEventState extends State<CreateEvent> {
     print(newEvent.host);
     print(newEvent.description);
     print(newEvent.latitude);
+    print(newEvent.dateTime.toString());
     print(newEvent.longitude);
 
     return FirebaseFirestore.instance
@@ -147,8 +150,13 @@ class _CreateEventState extends State<CreateEvent> {
                   icon: Icon(Icons.event),
                   dateLabelText: 'Day',
                   timeLabelText: "Time",
-                  onChanged: (val) => datetime = val,
-                  onSaved: (val) => datetime = val,
+                  onChanged: (val) {
+                    datetime = DateTime.parse(val);
+                    print(datetime.toString());
+                  },
+                  onSaved: (val) {
+                    datetime = DateTime.parse(val);
+                  },
                 )),
             Center(
               child: Padding(
@@ -183,13 +191,14 @@ class _CreateEventState extends State<CreateEvent> {
                     Event newEvent = Event(
                         name: eventName,
                         host: hostName,
+                        dateTime: datetime,
                         description: description,
                         latitude: lat,
                         longitude: long);
                     addEvent(newEvent);
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Events()),
+                      MaterialPageRoute(builder: (context) => Home()),
                     );
                   },
                 ),

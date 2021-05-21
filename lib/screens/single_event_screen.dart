@@ -1,6 +1,7 @@
 import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/models/event.dart';
+import 'package:circles/screens/coming_soon.dart';
 
 class EventPage extends StatefulWidget {
   Event event;
@@ -60,6 +61,16 @@ class _EventPage extends State<EventPage> {
                       fontSize: 18.0,
                       fontFamily: "Kayak Sans"),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    'Date and Time: ${widget.event.dateTime.toString()}',
+                    style: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: 18.0,
+                        fontFamily: "Kayak Sans"),
+                  ),
+                ),
               ],
             ),
           ),
@@ -92,7 +103,8 @@ class _EventPage extends State<EventPage> {
           SizedBox(
             width: 150.0,
             child: TextButton(
-              onPressed: () => null,
+              onPressed: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ComingSoon())),
               child: Text('+ Invite', style: TextStyle(fontSize: 18.0)),
               style: ButtonStyle(
                   padding:
