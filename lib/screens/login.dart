@@ -125,6 +125,9 @@ class _LoginScreenState extends State<LoginScreen> {
       await _authService.populateCurrentUser(authResult.user.uid);
 //      print(_authService.currentUser);
 
+      FirestoreService service = new FirestoreService();
+      print(service.getUserIdFromName('Nandita Naik'));
+
       // Success
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) => Home()));

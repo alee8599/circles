@@ -14,7 +14,11 @@ class _CreateCircleState extends State<CreateCircle> {
   // ignore: deprecated_member_use
   List<String> uids = new List<String>();
 
-  Circles newCircle = Circles();
+  final textControl = TextEditingController();
+
+  Circles newCircle = new Circles();
+
+  String curFriendName;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +80,23 @@ class _CreateCircleState extends State<CreateCircle> {
                     }
                   }),
             ),
+            Padding(
+                padding: EdgeInsets.only(top: 8.0),
+                child: Text("Friend Name", style: TextStyle(fontSize: 20.0))),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
+              child: TextField(
+                  decoration:
+                      InputDecoration(fillColor: WhiteGrey, filled: true),
+                  controller: textControl,
+                  onChanged: (value) {
+                    if (mounted) {
+                      setState(() {
+                        curFriendName = value.trim();
+                      });
+                    }
+                  }),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -87,11 +108,15 @@ class _CreateCircleState extends State<CreateCircle> {
                   style: ElevatedButton.styleFrom(
                     primary: RedOrange,
                   ),
-                  onPressed: () {
-                    // TODO: Create some front-end to look up a user name, query and find their
-                    // Firebase user ID and add them here
-                    // For now, I'll default to adding the user ID of "temp"
-                    newCircle.userIds.add('temp');
+                  onPressed: () async {
+                    FirestoreService _firestoreService = new FirestoreService();
+                    String id = await _firestoreService
+                        .getUserIdFromName(curFriendName);
+
+                    if (newCircle.userIds == null) newCircle.userIds = [];
+
+                    newCircle.userIds.add(id);
+                    textControl.clear();
                   },
                 ),
               ],

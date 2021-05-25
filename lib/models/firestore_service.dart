@@ -3,6 +3,7 @@ import 'package:circles/models/user_model.dart';
 import 'package:circles/models/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
+import 'dart:convert';
 
 class FirestoreService {
   final CollectionReference _usersCollectionReference =
@@ -19,7 +20,7 @@ class FirestoreService {
 
   static String getRandomString(int length) {
     Random _rnd = Random();
-    String.fromCharCodes(Iterable.generate(
+    return String.fromCharCodes(Iterable.generate(
         length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
   }
 
@@ -37,7 +38,26 @@ class FirestoreService {
     try {
       await _circlesCollectionReference.doc(circle.id).set(circle.toJson());
     } catch (e) {
-      throw '';
+      throw e;
+    }
+  }
+
+  Future getUserIdFromName(String name) async {
+    try {
+      var users = await _usersCollectionReference.get();
+      final userData = List.from(users.docs.map((doc) => doc.data())).toList();
+
+      for (int i = 0; i < userData.length; ++i) {
+//        print(userData[i]);
+        //      print(userData[i]["name"]);
+        if (userData[i]["name"] == name) {
+          //      print("ID TO RETURN");
+          //    print(userData[i]["id"]);
+          return userData[i]["id"];
+        }
+      }
+    } catch (e) {
+      throw e;
     }
   }
 
