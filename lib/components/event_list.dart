@@ -55,7 +55,7 @@ class _EventListState extends State<EventList> {
               },
               child: DraggableScrollableSheet(
                   initialChildSize: 0.31,
-                  minChildSize: 0.13,
+                  minChildSize: 85.0 / MediaQuery.of(context).size.height,
                   maxChildSize: (MediaQuery.of(context).size.height - 60.0) /
                       MediaQuery.of(context).size.height,
                   builder: (BuildContext context,
