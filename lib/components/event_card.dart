@@ -7,11 +7,15 @@ class EventCard extends StatelessWidget {
 
   EventCard(this.event);
 
+  String calcOtherText() {
+    return 'You and ${event.going.length} others';
+  }
+
   @override
   Widget build(BuildContext context) {
     final String eventName = event.name;
     final String eventHost = event.host;
-    final String othersText = 'You and several others';
+    final String othersText = calcOtherText();
 
     return Container(
       height: 120.0,

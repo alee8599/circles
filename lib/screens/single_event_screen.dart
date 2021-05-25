@@ -1,12 +1,18 @@
+import 'package:circles/models/auth_service.dart';
+import 'package:circles/models/firestore_service.dart';
 import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/models/event.dart';
 import 'package:circles/screens/coming_soon.dart';
 
 class EventPage extends StatefulWidget {
+  AuthenticationService auth = AuthenticationService();
+
   Event event;
 
   EventPage({this.event});
+
+  String userId = 'maJSk2C1XSeyEKVmGBMIEni7hy23';
 
   @override
   _EventPage createState() => _EventPage();
@@ -17,6 +23,7 @@ class _EventPage extends State<EventPage> {
 
   @override
   Widget build(BuildContext context) {
+    //print(widget.event);
     Color color = Theme.of(context).primaryColor;
 
     Widget ResponseSection = Container(
@@ -103,8 +110,13 @@ class _EventPage extends State<EventPage> {
           SizedBox(
             width: 150.0,
             child: TextButton(
-              onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => ComingSoon())),
+              onPressed: () {
+                FirestoreService.addUsertoList(
+                    widget.userId, widget.event, 'invited');
+
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ComingSoon()));
+              },
               child: Text('+ Invite', style: TextStyle(fontSize: 18.0)),
               style: ButtonStyle(
                   padding:
@@ -192,13 +204,12 @@ class _EventPage extends State<EventPage> {
           child: IconButton(
             icon: Icon(icon, size: 40.0),
             color: pressed ? color : Grey,
-            onPressed: () => {
-              if (mounted)
-                {
-                  setState(() {
-                    pressedButton = index;
-                  })
-                }
+            onPressed: () {
+              if (mounted) {
+                setState(() {
+                  pressedButton = index;
+                });
+              }
             },
           ),
         ),

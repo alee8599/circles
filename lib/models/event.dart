@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:circles/models/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 //maJSk2C1XSeyEKVmGBMIEni7hy23 - alex
@@ -11,24 +12,33 @@ List<String> filler = [
 ];
 
 class Event {
+  String id;
   String name;
   double latitude;
   double longitude;
   String host;
   DateTime dateTime; //include after set up the json reading
   String description;
-  List<String> users;
+  List<String> invited;
+  List<String> going;
+  List<String> rejected;
 
   Event(
-      {this.name,
+      {this.id,
+      this.name,
       this.latitude,
       this.longitude,
       this.host,
       this.description,
       this.dateTime,
-      this.users});
+      this.invited,
+      this.going,
+      this.rejected});
 
   static Event createEvent(Map<String, dynamic> json) {
+    String id = !json.containsKey('id')
+        ? FirestoreService.getRandomString(20)
+        : json['id'].toString();
     String name =
         !json.containsKey('name') ? 'Missing Event' : json['name'].toString();
     double latitude =
@@ -43,32 +53,42 @@ class Event {
     String description = !json.containsKey('description')
         ? 'Missing Description'
         : json['description'].toString();
-    List<String> users =
-        !json.containsKey('users') ? filler : json['users'].cast<String>();
+    List<String> invited =
+        !json.containsKey('invited') ? filler : json['invited'].cast<String>();
+    List<String> going =
+        !json.containsKey('going') ? [] : json['going'].cast<String>();
+    List<String> rejected =
+        !json.containsKey('rejected') ? [] : json['rejected'].cast<String>();
 
     return Event(
+        id: id,
         name: name,
         latitude: latitude,
         longitude: longitude,
         host: host,
         dateTime: dateTime,
         description: description,
-        users: users);
+        invited: invited,
+        going: going,
+        rejected: rejected);
   }
 
   Map<String, Object> toJson() {
     return {
+      'id': id,
       'name': name,
       'latitude': latitude,
       'longitude': longitude,
       'host': host,
       'dateTime': dateTime.toString(),
       'description': description,
-      'users': users
+      'invited': invited,
+      'going': going,
+      'rejected': rejected,
     };
   }
 
   String toString() {
-    return '$name + $latitude + $longitude + $host + ${dateTime.toString()} + $description';
+    return '$id + $name + $latitude + $longitude + $host + ${dateTime.toString()} + $description + $invited + $going + $rejected';
   }
 }

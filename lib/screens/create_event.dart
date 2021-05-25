@@ -18,31 +18,17 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
+  String id = FirestoreService.getRandomString(20);
   String hostName;
   String description;
   DateTime datetime;
   String eventName;
   double lat = 39.4276;
   double long = -124.0;
-  List<String> users = [
+  List<String> invited = [
     'HcsTCw3H0NgeZORzme4FZXTGYB53',
     'maJSk2C1XSeyEKVmGBMIEni7hy23'
   ];
-
-  Future<void> addEvent(Event newEvent) async {
-    print(newEvent.name);
-    print(newEvent.host);
-    print(newEvent.description);
-    print(newEvent.latitude);
-    print(newEvent.dateTime.toString());
-    print(newEvent.longitude);
-
-    return FirebaseFirestore.instance
-        .collection('events')
-        .add(newEvent.toJson())
-        .then((value) => print('Event added'))
-        .catchError((error) => print("failed to add event"));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,131 +75,134 @@ class _CreateEventState extends State<CreateEvent> {
             onPressed: () => Navigator.of(context).maybePop(),
           ),
         ),
-        body: ListView(
-          children: [
-            Padding(
-                padding: EdgeInsets.only(top: 20.0, bottom: 16.0, left: 150.0),
-                child: Text(
-                  "Event Details",
-                  style: TextStyle(
-                    fontSize: 24.0,
-                  ),
-                )),
-            Padding(
-                padding: EdgeInsets.only(top: 12.0, left: 18.0),
-                child: Text("Host Name", style: TextStyle(fontSize: 20.0))),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
-              child: TextFormField(
-                  onChanged: (value) => {hostName = value},
-                  validator: (value) {
-                    return (value != null) ? "Needs to be filled out" : null;
-                  },
-                  decoration:
-                      InputDecoration(fillColor: WhiteGrey, filled: true)),
-            ),
-            Padding(
-                padding: EdgeInsets.only(top: 12.0, left: 18.0),
-                child: Text("Event Name", style: TextStyle(fontSize: 20.0))),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
-              child: TextField(
-                  onChanged: (value) => {eventName = value},
-                  decoration:
-                      InputDecoration(fillColor: WhiteGrey, filled: true)),
-            ),
-            Padding(
-                padding: EdgeInsets.only(top: 8.0, left: 20.0),
-                child: Text("Description", style: TextStyle(fontSize: 20.0))),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
-              child: TextField(
-                  onChanged: (value) => {description = value},
-                  decoration:
-                      InputDecoration(fillColor: WhiteGrey, filled: true)),
-            ),
-            Center(
-                child: ElevatedButton(
+        body: Form(showPlacePicker, context));
+  }
+
+  ListView Form(void showPlacePicker(), BuildContext context) {
+    return ListView(
+      children: [
+        Padding(
+            padding: EdgeInsets.only(top: 20.0, bottom: 16.0, left: 150.0),
+            child: Text(
+              "Event Details",
+              style: TextStyle(
+                fontSize: 24.0,
+              ),
+            )),
+        Padding(
+            padding: EdgeInsets.only(top: 12.0, left: 18.0),
+            child: Text("Host Name", style: TextStyle(fontSize: 20.0))),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
+          child: TextFormField(
+              onChanged: (value) => {hostName = value},
+              validator: (value) {
+                return (value != null) ? "Needs to be filled out" : null;
+              },
+              decoration: InputDecoration(fillColor: WhiteGrey, filled: true)),
+        ),
+        Padding(
+            padding: EdgeInsets.only(top: 12.0, left: 18.0),
+            child: Text("Event Name", style: TextStyle(fontSize: 20.0))),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
+          child: TextField(
+              onChanged: (value) => {eventName = value},
+              decoration: InputDecoration(fillColor: WhiteGrey, filled: true)),
+        ),
+        Padding(
+            padding: EdgeInsets.only(top: 8.0, left: 20.0),
+            child: Text("Description", style: TextStyle(fontSize: 20.0))),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
+          child: TextField(
+              onChanged: (value) => {description = value},
+              decoration: InputDecoration(fillColor: WhiteGrey, filled: true)),
+        ),
+        Center(
+            child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Green,
+          ),
+          child: Text(
+            "Pick Location (does not save location yet)",
+            style: TextStyle(fontSize: 20.0),
+          ),
+          onPressed: () {
+            showPlacePicker();
+          },
+        )),
+        Container(
+            padding: const EdgeInsets.only(left: 8.0, bottom: 20.0, right: 8.0),
+            child: DateTimePicker(
+              type: DateTimePickerType.dateTimeSeparate,
+              dateMask: 'd MMM, yyyy',
+              initialValue: DateTime.now().toString(),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2100),
+              icon: Icon(Icons.event),
+              dateLabelText: 'Day',
+              timeLabelText: "Time",
+              onChanged: (val) {
+                datetime = DateTime.parse(val);
+                print(datetime.toString());
+              },
+              onSaved: (val) {
+                datetime = DateTime.parse(val);
+              },
+            )),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: ElevatedButton(
+              child: Text(
+                '+ Invite Friends',
+                style: TextStyle(fontSize: 30.0),
+              ),
               style: ElevatedButton.styleFrom(
                 primary: Green,
               ),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ComingSoon()));
+              },
+            ),
+          ),
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: ElevatedButton(
               child: Text(
-                "Pick Location (does not save location yet)",
-                style: TextStyle(fontSize: 20.0),
+                'Create Event',
+                style: TextStyle(fontSize: 30.0),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: RedOrange,
               ),
               onPressed: () {
-                showPlacePicker();
+                Event newEvent = Event(
+                  id: id,
+                  name: eventName,
+                  host: hostName,
+                  dateTime: datetime == null ? DateTime.now() : datetime,
+                  description: description,
+                  latitude: lat,
+                  longitude: long,
+                  invited: invited,
+                  going: [],
+                  rejected: [],
+                );
+                FirestoreService.addEvent(newEvent);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Home()),
+                );
               },
-            )),
-            Container(
-                padding:
-                    const EdgeInsets.only(left: 8.0, bottom: 20.0, right: 8.0),
-                child: DateTimePicker(
-                  type: DateTimePickerType.dateTimeSeparate,
-                  dateMask: 'd MMM, yyyy',
-                  initialValue: DateTime.now().toString(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                  icon: Icon(Icons.event),
-                  dateLabelText: 'Day',
-                  timeLabelText: "Time",
-                  onChanged: (val) {
-                    datetime = DateTime.parse(val);
-                    print(datetime.toString());
-                  },
-                  onSaved: (val) {
-                    datetime = DateTime.parse(val);
-                  },
-                )),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: ElevatedButton(
-                  child: Text(
-                    '+ Invite Friends',
-                    style: TextStyle(fontSize: 30.0),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Green,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ComingSoon()));
-                  },
-                ),
-              ),
             ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: ElevatedButton(
-                  child: Text(
-                    'Create Event',
-                    style: TextStyle(fontSize: 30.0),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: RedOrange,
-                  ),
-                  onPressed: () {
-                    Event newEvent = Event(
-                      name: eventName,
-                      host: hostName,
-                      dateTime: datetime == null ? DateTime.now() : datetime,
-                      description: description,
-                      latitude: lat,
-                      longitude: long,
-                      users: users,
-                    );
-                    addEvent(newEvent);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
-                  },
-                ),
-              ),
-            )
-          ],
-        ));
+          ),
+        )
+      ],
+    );
   }
 }

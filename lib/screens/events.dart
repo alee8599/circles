@@ -1,4 +1,5 @@
 import 'package:circles/models/auth_service.dart';
+import 'package:circles/models/firestore_service.dart';
 import 'package:circles/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,13 +67,6 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
     }
   }
 
-  static const _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  Random _rnd = Random();
-
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-
   Future getMarkersList() async {
     List<Marker> markerlist = [];
 
@@ -91,10 +85,10 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
 //        print(lat);
 //        print(lng);
 
-        String markerId = getRandomString(10);
+        String markerId = FirestoreService.getRandomString(10);
 
         if (!markerIds.containsKey(lat)) {
-          markerIds[lat] = getRandomString(10);
+          markerIds[lat] = FirestoreService.getRandomString(10);
         }
 
         markerlist.add(Marker(
