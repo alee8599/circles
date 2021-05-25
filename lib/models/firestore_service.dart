@@ -48,11 +48,7 @@ class FirestoreService {
       final userData = List.from(users.docs.map((doc) => doc.data())).toList();
 
       for (int i = 0; i < userData.length; ++i) {
-//        print(userData[i]);
-        //      print(userData[i]["name"]);
         if (userData[i]["name"] == name) {
-          //      print("ID TO RETURN");
-          //    print(userData[i]["id"]);
           return userData[i]["id"];
         }
       }

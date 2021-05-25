@@ -17,14 +17,18 @@ class _HomeState extends State<Home> {
   _HomeState(this.userId);
 
   int _currentIndex = 1;
-  final List<Widget> _children = [
-    Events(public: true),
-    Events(public: false),
-    PlaceHolder()
-  ];
 
   @override
   Widget build(BuildContext context) {
+    print('userId from home state');
+    print(userId);
+
+    final List<Widget> _children = [
+      Events(public: true, userId: userId),
+      Events(public: false, userId: userId),
+      PlaceHolder()
+    ];
+
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

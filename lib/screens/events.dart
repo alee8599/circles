@@ -16,17 +16,20 @@ import 'package:circles/components/drawer.dart';
 
 class Events extends StatefulWidget {
   bool public;
+  final String userId;
 
-  Events({this.public});
+  Events({Key key, @required this.userId, this.public}) : super(key: key);
 
   @override
-  _EventsState createState() => _EventsState();
+  _EventsState createState() => _EventsState(userId);
 }
 
 final auth = FirebaseAuth.instance;
 
 class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
   bool top = false;
+  final String userId;
+  _EventsState(this.userId);
 
   @override
   List<Marker> allMarkers = [];
@@ -41,6 +44,8 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     //  DocumentSnapshot variable = await Firestore.instance.('events');
     fetchMarkersList();
+    print('user Id from events state');
+    print(userId);
   }
 
   void dispose() {
