@@ -36,7 +36,8 @@ class _EventListState extends State<EventList> {
         future: _eventsFuture,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            var eventlist = snapshot.data.docs;
+            List<QueryDocumentSnapshot<Map<String, dynamic>>> eventlist =
+                snapshot.data.docs;
             return NotificationListener<DraggableScrollableNotification>(
               // ignore: missing_return
               onNotification: (notification) {
@@ -68,7 +69,9 @@ class _EventListState extends State<EventList> {
                             if (index == 0) {
                               return Header(top: top);
                             }
-                            Event event = Event.fromData(eventlist[index - 1]);
+                            Event event =
+                                Event.createEvent(eventlist[index - 1].data());
+                            //print(event.users);
                             return EventCard(event);
                           }),
                       decoration: BoxDecoration(

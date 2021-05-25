@@ -24,6 +24,10 @@ class _CreateEventState extends State<CreateEvent> {
   String eventName;
   double lat = 39.4276;
   double long = -124.0;
+  List<String> users = [
+    'HcsTCw3H0NgeZORzme4FZXTGYB53',
+    'maJSk2C1XSeyEKVmGBMIEni7hy23'
+  ];
 
   Future<void> addEvent(Event newEvent) async {
     print(newEvent.name);
@@ -100,8 +104,11 @@ class _CreateEventState extends State<CreateEvent> {
                 child: Text("Host Name", style: TextStyle(fontSize: 20.0))),
             Padding(
               padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
-              child: TextField(
+              child: TextFormField(
                   onChanged: (value) => {hostName = value},
+                  validator: (value) {
+                    return (value != null) ? "Needs to be filled out" : null;
+                  },
                   decoration:
                       InputDecoration(fillColor: WhiteGrey, filled: true)),
             ),
@@ -189,12 +196,14 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                   onPressed: () {
                     Event newEvent = Event(
-                        name: eventName,
-                        host: hostName,
-                        dateTime: datetime,
-                        description: description,
-                        latitude: lat,
-                        longitude: long);
+                      name: eventName,
+                      host: hostName,
+                      dateTime: datetime == null ? DateTime.now() : datetime,
+                      description: description,
+                      latitude: lat,
+                      longitude: long,
+                      users: users,
+                    );
                     addEvent(newEvent);
                     Navigator.pushReplacement(
                       context,
