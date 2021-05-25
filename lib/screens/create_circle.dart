@@ -6,21 +6,35 @@ import 'home_screen.dart';
 
 class CreateCircle extends StatefulWidget {
   @override
-  _CreateCircleState createState() => _CreateCircleState();
+  final String userId;
+
+  CreateCircle({Key key, @required this.userId}) : super(key: key);
+
+  _CreateCircleState createState() => _CreateCircleState(userId);
 }
 
 class _CreateCircleState extends State<CreateCircle> {
   @override
-  // ignore: deprecated_member_use
-  List<String> uids = new List<String>();
+  final String userId;
+  _CreateCircleState(this.userId);
+
+  List<String> uids = [];
 
   final textControl = TextEditingController();
 
   Circles newCircle = new Circles();
 
   String curFriendName;
+  void initState() {
+    super.initState();
+    print('user Id from create circles state');
+    print(userId);
+  }
 
   Widget build(BuildContext context) {
+    print('user Id from create circles state');
+    print(userId);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -135,6 +149,8 @@ class _CreateCircleState extends State<CreateCircle> {
                   ),
                   onPressed: () async {
                     // Push the circle we've created to Firebase
+                    newCircle.userIds.add(userId);
+
                     FirestoreService _firestoreService = new FirestoreService();
 
                     try {

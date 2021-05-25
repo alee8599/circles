@@ -8,8 +8,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 class DrawerMenu extends StatelessWidget {
   final auth = FirebaseAuth.instance;
 
+  final String userId;
+  DrawerMenu(this.userId);
+
   @override
   Widget build(BuildContext context) {
+//    print("user id from drawer menu");
+    //  print(userId);
+
     return Scaffold(
       backgroundColor: WhiteGrey,
       body: Drawer(
@@ -31,8 +37,8 @@ class DrawerMenu extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => CreateCircle()));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => CreateCircle(userId: userId)));
           },
           title: Text('Your Circles',
               style: TextStyle(

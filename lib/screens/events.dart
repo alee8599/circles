@@ -129,7 +129,7 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
             double slide = rightSlide * _animationController.value;
 
             return Stack(children: [
-              DrawerMenu(),
+              DrawerMenu(userId),
               eventsStack(slide, widget.public, context)
             ]);
           }),
