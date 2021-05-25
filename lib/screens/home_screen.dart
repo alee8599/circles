@@ -6,10 +6,16 @@ import 'dart:math';
 
 class Home extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  final String userId;
+  Home({Key key, @required this.userId}) : super(key: key);
+
+  _HomeState createState() => _HomeState(userId);
 }
 
 class _HomeState extends State<Home> {
+  final String userId;
+  _HomeState(this.userId);
+
   int _currentIndex = 1;
   final List<Widget> _children = [
     Events(public: true),

@@ -126,11 +126,10 @@ class _LoginScreenState extends State<LoginScreen> {
 //      print(_authService.currentUser);
 
       FirestoreService service = new FirestoreService();
-      print(service.getUserIdFromName('Nandita Naik'));
 
       // Success
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => Home(userId: _authService.currentUser.id)));
     } on FirebaseAuthException catch (error) {
       print(error.message);
       Fluttertoast.showToast(msg: error.message, gravity: ToastGravity.TOP);
