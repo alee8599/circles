@@ -112,8 +112,8 @@ class _CirclesPageState extends State<CirclesPage> {
   Widget build(BuildContext context) {
     fetchCirclesList();
 
-    print('user Id from circles page state');
-    print(userId);
+//    print('user Id from circles page state');
+    //  print(userId);
 //    print('circleslist');
     Future<QuerySnapshot> _friendsFuture;
     List<QueryDocumentSnapshot<Map<String, dynamic>>> userList;
@@ -131,28 +131,30 @@ class _CirclesPageState extends State<CirclesPage> {
     return new MaterialApp(
       title: title,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
-        body: ListView.builder(
-            itemCount: circleslist.length,
-            itemBuilder: (context, index) {
-              return Container(
-                color: RedOrange.withOpacity(0.2),
-                child: ListTile(
-                    title: Text(circleslist[index].name),
-                    subtitle: Text(circleslist[index].description)),
-              );
-            }),
-        floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => CreateCircle(userId: userId)));
-            },
-            label: const Text('Add Circle'),
-            backgroundColor: Theme.of(context).accentColor),
-      ),
+          appBar: AppBar(
+            title: Text(title),
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          body: ListView.builder(
+              itemCount: circleslist.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  color: RedOrange.withOpacity(0.2),
+                  child: ListTile(
+                      title: Text(circleslist[index].name),
+                      subtitle: Text(circleslist[index].description)),
+                );
+              }),
+          floatingActionButton: Transform.scale(
+            scale: 1.25,
+            child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CreateCircle(userId: userId)));
+                },
+                label: const Text('+', style: TextStyle(fontSize: 25)),
+                backgroundColor: Theme.of(context).accentColor),
+          )),
     );
 /*   return Scaffold(
         appBar: AppBar(
