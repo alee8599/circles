@@ -1,4 +1,5 @@
 import 'package:circles/screens/create_circle.dart';
+import 'package:circles/screens/circles_page.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/theme.dart';
 import 'package:circles/screens/coming_soon.dart';
@@ -38,7 +39,7 @@ class DrawerMenu extends StatelessWidget {
         ListTile(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CreateCircle(userId: userId)));
+                builder: (context) => CirclesPage(userId: userId)));
           },
           title: Text('Your Circles',
               style: TextStyle(

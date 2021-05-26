@@ -7,7 +7,7 @@ import 'dart:convert';
 
 class FirestoreService {
   final CollectionReference _chatsCollectionReference =
-  FirebaseFirestore.instance.collection("chats");
+      FirebaseFirestore.instance.collection("chats");
 
   final CollectionReference _usersCollectionReference =
       FirebaseFirestore.instance.collection("users");
@@ -27,8 +27,6 @@ class FirestoreService {
         length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
   }
 
-
-
   Future createUser(CirclesUser user) async {
     try {
       print(user.id);
@@ -42,6 +40,32 @@ class FirestoreService {
   Future createCircles(Circles circle) async {
     try {
       await _circlesCollectionReference.doc(circle.id).set(circle.toJson());
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future retrieveAllCircles(String uid) async {
+    try {
+      var circles = await _circlesCollectionReference.get();
+      List<Circles> circlesWithUid;
+
+      final circlesData =
+          List.from(circles.docs.map((doc) => doc.data())).toList();
+
+      print("circles data");
+      print(circlesData);
+
+      for (int i = 0; i < circlesData.length; ++i) {
+        for (int j = 0; j < circlesData[i]["userIDs"].length; ++j) {
+          if (circlesData[i]["userIDs"][j] == uid) {
+            circlesWithUid.add(circlesData[i]["userIDs"]);
+            continue;
+          }
+        }
+      }
+
+      return circlesWithUid;
     } catch (e) {
       throw e;
     }

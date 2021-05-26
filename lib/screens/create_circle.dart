@@ -128,8 +128,7 @@ class _CreateCircleState extends State<CreateCircle> {
                         .getUserIdFromName(curFriendName);
 
                     if (newCircle.userIds == null) newCircle.userIds = [];
-
-                    newCircle.userIds.add(id);
+                    if (id != null) newCircle.userIds.add(id);
                     textControl.clear();
                   },
                 ),

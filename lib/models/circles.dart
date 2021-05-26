@@ -10,7 +10,7 @@ class Circles {
 
   Map<String, dynamic> toJson() {
     return {
-      'userIDs': jsonEncode(userIds),
+      'userIDs': userIds,
       'id': id,
       'name': name,
       'description': description
