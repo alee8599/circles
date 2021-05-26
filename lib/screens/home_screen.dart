@@ -1,8 +1,9 @@
-import 'package:circles/screens/events.dart';
+import 'package:circles/screens/your_events.dart';
 import 'package:flutter/material.dart';
 import 'placeholder.dart';
 import 'package:circles/theme.dart';
 import 'dart:math';
+import 'package:circles/screens/public_events.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -24,8 +25,8 @@ class _HomeState extends State<Home> {
     print(userId);
 
     final List<Widget> _children = [
-      Events(public: true, userId: userId),
-      Events(public: false, userId: userId),
+      PublicEvents(userId: userId),
+      Events(userId: userId),
       PlaceHolder()
     ];
 

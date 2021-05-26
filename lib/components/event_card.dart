@@ -4,8 +4,9 @@ import 'package:circles/models/event.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
+  final String userId;
 
-  EventCard(this.event);
+  EventCard(this.userId, this.event);
 
   String calcOtherText() {
     return 'You and ${event.going.length} others';
@@ -23,7 +24,8 @@ class EventCard extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EventPage(event: event)),
+            MaterialPageRoute(
+                builder: (context) => EventPage(userId: userId, event: event)),
           );
         },
         child: Card(

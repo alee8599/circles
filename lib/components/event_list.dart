@@ -11,9 +11,10 @@ import 'dart:math';
 class EventList extends StatefulWidget {
   bool public;
   final Function top;
+  final String userId;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  EventList({this.public, this.top});
+  EventList({this.public, this.userId, this.top});
 
   @override
   _EventListState createState() => _EventListState();
@@ -27,7 +28,14 @@ class _EventListState extends State<EventList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _eventsFuture = widget.firestore.collection('events').get();
+    print(widget.public);
+    print(widget.userId);
+    _eventsFuture = widget.public
+        ? widget.firestore.collection('events').get()
+        : widget.firestore
+            .collection('events')
+            .where('invited', arrayContainsAny: [widget.userId]).get();
+    //print(_eventsFuture);
   }
 
   @override
@@ -72,7 +80,7 @@ class _EventListState extends State<EventList> {
                             Event event =
                                 Event.createEvent(eventlist[index - 1].data());
                             //print(event.users);
-                            return EventCard(event);
+                            return EventCard(widget.userId, event);
                           }),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -88,7 +96,6 @@ class _EventListState extends State<EventList> {
                   }),
             );
           }
-          print('here');
 
           return Container(color: Colors.red);
           /*eventlist.forEach((doc) {

@@ -4,15 +4,15 @@ import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/models/event.dart';
 import 'package:circles/screens/coming_soon.dart';
+import 'package:circles/screens/invite_friends.dart';
 
 class EventPage extends StatefulWidget {
   AuthenticationService auth = AuthenticationService();
 
   Event event;
+  String userId;
 
-  EventPage({this.event});
-
-  String userId = 'maJSk2C1XSeyEKVmGBMIEni7hy23';
+  EventPage({this.event, this.userId});
 
   @override
   _EventPage createState() => _EventPage();
@@ -111,11 +111,9 @@ class _EventPage extends State<EventPage> {
             width: 150.0,
             child: TextButton(
               onPressed: () {
-                FirestoreService.addUsertoList(
-                    widget.userId, widget.event, 'invited');
-
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ComingSoon()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => InviteFriends(
+                        userId: widget.userId, event: widget.event)));
               },
               child: Text('+ Invite', style: TextStyle(fontSize: 18.0)),
               style: ButtonStyle(

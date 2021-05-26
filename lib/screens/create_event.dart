@@ -1,6 +1,6 @@
 import 'package:circles/models/circles.dart';
 import 'package:circles/models/firestore_service.dart';
-import 'package:circles/screens/events.dart';
+import 'package:circles/screens/your_events.dart';
 import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/screens/coming_soon.dart';
