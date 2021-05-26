@@ -15,10 +15,12 @@ import 'package:circles/screens/create_event.dart';
 import 'package:circles/components/drawer.dart';
 
 class Events extends StatefulWidget {
-  bool public;
   final String userId;
 
-  Events({Key key, @required this.userId, this.public}) : super(key: key);
+  Events({
+    Key key,
+    @required this.userId,
+  }) : super(key: key);
 
   @override
   _EventsState createState() => _EventsState(userId);
@@ -130,13 +132,14 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
 
             return Stack(children: [
               DrawerMenu(userId),
-              eventsStack(slide, widget.public, context)
+              eventsStack(slide, userId, context)
             ]);
           }),
     );
   }
 
-  Transform eventsStack(double slide, bool public, BuildContext context) {
+  Transform eventsStack(
+      double slide, final String userId, BuildContext context) {
     return Transform(
         transform: Matrix4.identity()..translate(slide),
         alignment: Alignment.center,
@@ -154,7 +157,8 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
               ),
             ),
             EventList(
-                public: public,
+                public: false,
+                userId: userId,
                 top: (bool input) => {
                       setState(() {
                         top = input;
