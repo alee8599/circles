@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:circles/models/message_model.dart';
 import 'package:circles/models/user_model.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatefulWidget {
   final CirclesUser user;
@@ -14,21 +15,26 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   String message = '';
   var now = DateTime.now();
-  void sendMessage() {
-    setState(() {
-      // FocusScope.of(context).unfocus();
-      final Message msg = Message(
-        chat_id: 'Knitting Club',
-        sender: currentUser,
-        time: 'Today, ' + DateFormat('kk:mm').format(now),
-        text: message,
-        isLiked: false,
-        unread: false,
-      );
-      messages.insert(0, msg);
-    });
+  void sendMessage() async {
+    // FocusScope.of(context).unfocus();
+    var userData = await FirebaseFirestore.instance.collection("chats").doc("dev_team").get();
+    var old_msgs = userData["msgs"];
+    old_msgs.insert(0, message);
+    await FirebaseFirestore.instance.collection('chats').doc('dev_team').update({'msgs': old_msgs});
+    // setState(() {
+    //   // FocusScope.of(context).unfocus();
+    //   // final Message msg = Message(
+    //   //   chat_id: 'Knitting Club',
+    //   //   sender: currentUser,
+    //   //   time: 'Today, ' + DateFormat('kk:mm').format(now),
+    //   //   text: message,
+    //   //   isLiked: false,
+    //   //   unread: false,
+    //   // );
+    //
+    // });
   }
-  _buildMessage(Message message, bool isMe) {
+  _buildMessage(String message, bool isMe) {
     final Container msg = Container(
       margin: isMe
           ? EdgeInsets.only(
@@ -57,17 +63,17 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            message.sender.name + ' - ' + message.time,
-            style: TextStyle(
-              color: Colors.blueGrey,
-              fontSize: 16.0,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          // Text(
+          //   message.sender.name + ' - ' + message.time,
+          //   style: TextStyle(
+          //     color: Colors.blueGrey,
+          //     fontSize: 16.0,
+          //     fontWeight: FontWeight.w600,
+          //   ),
+          // ),
           SizedBox(height: 8.0),
           Text(
-            message.text,
+            message,
             style: TextStyle(
               color: Colors.blueGrey,
               fontSize: 16.0,
@@ -83,16 +89,16 @@ class _ChatScreenState extends State<ChatScreen> {
     return Row(
       children: <Widget>[
         msg,
-        IconButton(
-          icon: message.isLiked
-              ? Icon(Icons.favorite)
-              : Icon(Icons.favorite_border),
-          iconSize: 30.0,
-          color: message.isLiked
-              ? Theme.of(context).primaryColor
-              : Colors.blueGrey,
-          onPressed: () {},
-        )
+        // IconButton(
+        //   icon: message.isLiked
+        //       ? Icon(Icons.favorite)
+        //       : Icon(Icons.favorite_border),
+        //   iconSize: 30.0,
+        //   color: message.isLiked
+        //       ? Theme.of(context).primaryColor
+        //       : Colors.blueGrey,
+        //   onPressed: () {},
+        // )
       ],
     );
   }
@@ -133,64 +139,72 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+  final Stream<QuerySnapshot> _chatStream = FirebaseFirestore.instance.collection('chats').snapshots();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
-        title: Text(
-          widget.user.name,
-          style: TextStyle(
-            fontSize: 28.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        elevation: 0.0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.more_horiz),
-            iconSize: 30.0,
-            color: Colors.white,
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
-                  ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
-                  ),
-                  child: ListView.builder(
-                    reverse: true,
-                    padding: EdgeInsets.only(top: 15.0),
-                    itemCount: messages.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final Message message = messages[index];
-                      final bool isMe = message.sender.id == currentUser.id;
-                      return _buildMessage(message, isMe);
-                    },
-                  ),
+    return StreamBuilder(
+        stream: _chatStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          var messages = snapshot.data.docs[0].get('msgs');
+          return Scaffold(
+            backgroundColor: Theme.of(context).primaryColor,
+            appBar: AppBar(
+              title: Text(
+                'Chat',
+                style: TextStyle(
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+              elevation: 0.0,
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.more_horiz),
+                  iconSize: 30.0,
+                  color: Colors.white,
+                  onPressed: () {},
+                ),
+              ],
             ),
-            _buildMessageComposer(),
-          ],
-        ),
-      ),
+            body: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0),
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0),
+                        ),
+                        child: ListView.builder(
+                          reverse: true,
+                          padding: EdgeInsets.only(top: 15.0),
+                          itemCount: messages.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final String message = messages[index];
+                            final bool isMe = false;
+                            return _buildMessage(message, isMe);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  _buildMessageComposer(),
+                ],
+              ),
+            ),
+          );
+        }
     );
+
   }
 }

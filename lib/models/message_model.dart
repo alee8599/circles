@@ -1,21 +1,14 @@
 import 'package:circles/models/user_model.dart';
 
-class Message {
-  final String chat_id;
-  final CirclesUser sender;
-  final String
-      time; // Would usually be type DateTime or Firebase Timestamp in production apps
-  final String text;
-  final bool isLiked;
-  final bool unread;
+class Chat {
+  final String event_name;
+  final List<String> users;
+  final List<String> msgs;
 
-  Message({
-    this.chat_id,
-    this.sender,
-    this.time,
-    this.text,
-    this.isLiked,
-    this.unread,
+  Chat({
+    this.event_name,
+    this.users,
+    this.msgs,
   });
 }
 
@@ -50,81 +43,73 @@ final CirclesUser nandita = CirclesUser(
 
 
 // EXAMPLE CHATS ON HOME SCREEN
-List<Message> chats = [
-  Message(
-    chat_id: 'Knitting Club',
-    sender: nandita,
-    time: '17:30',
-    text: 'Of course, see you all later!',
-    isLiked: false,
-    unread: true,
+List<Chat> chats = [
+  Chat(
+      event_name: 'Knitting Club',
+      users: [],
+      msgs: ['Test', 'Test','Test']
   ),
-  Message(
-    chat_id: 'Board Games',
-    sender: john,
-    time: '16:30',
-    text: 'Of course, see you all later!',
-    isLiked: false,
-    unread: true,
+  Chat(
+      event_name: 'Crotherhood',
+      users: [],
+      msgs: ['Test', 'Test','Test']
   ),
-  Message(
-    chat_id: 'Hike the Dish',
-    sender: alex,
-    time: '15:30',
-    text: 'Of course, see you all later!',
-    isLiked: false,
-    unread: false,
+  Chat(
+      event_name: 'Board Games',
+      users: [],
+      msgs: ['Test', 'Test','Test']
   ),
 ];
 
+List<String> messages = ['Of course, see you all later!', 'Placeholder', 'Test'];
 // EXAMPLE MESSAGES IN CHAT SCREEN
-List<Message> messages = [
-  Message(
-    chat_id: 'Knitting Club',
-    sender: nandita,
-    time: 'May 03, 17:30',
-    text: 'Of course, see you all later!',
-    isLiked: true,
-    unread: true,
-  ),
-  Message(
-    chat_id: 'Knitting Club',
-    sender: currentUser,
-    time: 'May 03, 16:30',
-    text: 'Bet. Sounds good!! Super excited to see you all.',
-    isLiked: false,
-    unread: true,
-  ),
-  Message(
-    chat_id: 'Knitting Club',
-    sender: alex,
-    time: 'May 03, 15:30',
-    text: 'Bringing drinks and snacks',
-    isLiked: false,
-    unread: true,
-  ),
-  Message(
-    chat_id: 'Knitting Club',
-    sender: ryan,
-    time: 'May 03, 15:15',
-    text: 'Lots of them',
-    isLiked: true,
-    unread: true,
-  ),
-  Message(
-    chat_id: 'Knitting Club',
-    sender: currentUser,
-    time: 'May 03, 14:30',
-    text: 'Nice! What kind of food did you get?',
-    isLiked: false,
-    unread: true,
-  ),
-  Message(
-    chat_id: 'Knitting Club',
-    sender: ryan,
-    time: 'May 03, 14:00',
-    text: 'I ordered the food.',
-    isLiked: false,
-    unread: true,
-  ),
-];
+// List<Message> messages = [
+//   Message(
+//     chat_id: 'Knitting Club',
+//     sender: nandita,
+//     time: 'May 03, 17:30',
+//     text: 'Of course, see you all later!',
+//     isLiked: true,
+//     unread: true,
+//   ),
+//   Message(
+//     chat_id: 'Knitting Club',
+//     sender: currentUser,
+//     time: 'May 03, 16:30',
+//     text: 'Bet. Sounds good!! Super excited to see you all.',
+//     isLiked: false,
+//     unread: true,
+//   ),
+//   Message(
+//     chat_id: 'Knitting Club',
+//     sender: alex,
+//     time: 'May 03, 15:30',
+//     text: 'Bringing drinks and snacks',
+//     isLiked: false,
+//     unread: true,
+//   ),
+//   Message(
+//     chat_id: 'Knitting Club',
+//     sender: ryan,
+//     time: 'May 03, 15:15',
+//     text: 'Lots of them',
+//     isLiked: true,
+//     unread: true,
+//   ),
+//   Message(
+//     chat_id: 'Knitting Club',
+//     sender: currentUser,
+//     time: 'May 03, 14:30',
+//     text: 'Nice! What kind of food did you get?',
+//     isLiked: false,
+//     unread: true,
+//   ),
+//   Message(
+//     chat_id: 'Knitting Club',
+//     sender: ryan,
+//     time: 'May 03, 14:00',
+//     text: 'I ordered the food.',
+//     isLiked: false,
+//     unread: true,
+//   ),
+// ];

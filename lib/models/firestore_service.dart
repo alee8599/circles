@@ -6,6 +6,9 @@ import 'dart:math';
 import 'dart:convert';
 
 class FirestoreService {
+  final CollectionReference _chatsCollectionReference =
+  FirebaseFirestore.instance.collection("chats");
+
   final CollectionReference _usersCollectionReference =
       FirebaseFirestore.instance.collection("users");
 
@@ -23,6 +26,8 @@ class FirestoreService {
     return String.fromCharCodes(Iterable.generate(
         length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
   }
+
+
 
   Future createUser(CirclesUser user) async {
     try {
