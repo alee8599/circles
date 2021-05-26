@@ -1,3 +1,4 @@
+import 'package:circles/screens/create_circle.dart';
 import 'package:circles/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -128,22 +129,31 @@ class _CirclesPageState extends State<CirclesPage> {
     final title = 'Your Circles';
 
     return new MaterialApp(
-        title: title,
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text(title),
-              backgroundColor: Theme.of(context).primaryColor,
-            ),
-            body: ListView.builder(
-                itemCount: circleslist.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    color: RedOrange.withOpacity(0.2),
-                    child: ListTile(
-                        title: Text(circleslist[index].name),
-                        subtitle: Text(circleslist[index].description)),
-                  );
-                })));
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        body: ListView.builder(
+            itemCount: circleslist.length,
+            itemBuilder: (context, index) {
+              return Container(
+                color: RedOrange.withOpacity(0.2),
+                child: ListTile(
+                    title: Text(circleslist[index].name),
+                    subtitle: Text(circleslist[index].description)),
+              );
+            }),
+        floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CreateCircle(userId: userId)));
+            },
+            label: const Text('Add Circle'),
+            backgroundColor: Theme.of(context).accentColor),
+      ),
+    );
 /*   return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
