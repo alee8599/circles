@@ -36,7 +36,8 @@ dependencies:
   cloud_firestore: ^2.1.0
   flutter_svg: ^0.22.0
   place_picker: ^0.9.19-nullsafety
-  permission_handler: ^7.1.0
+  permission_handler: ^7.1.0      
+  firebase_auth_web:
 
 dev_dependencies:
   flutter_test:
