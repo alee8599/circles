@@ -23,15 +23,14 @@ class Events extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _EventsState createState() => _EventsState(userId);
+  _EventsState createState() => _EventsState();
 }
 
 final auth = FirebaseAuth.instance;
 
 class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
   bool top = false;
-  final String userId;
-  _EventsState(this.userId);
+  _EventsState();
 
   @override
   List<Marker> allMarkers = [];
@@ -47,7 +46,7 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
     //  DocumentSnapshot variable = await Firestore.instance.('events');
     fetchMarkersList();
     print('user Id from events state');
-    print(userId);
+    print(widget.userId);
   }
 
   void dispose() {
@@ -131,8 +130,8 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
             double slide = rightSlide * _animationController.value;
 
             return Stack(children: [
-              DrawerMenu(userId),
-              eventsStack(slide, userId, context)
+              DrawerMenu(widget.userId),
+              eventsStack(slide, widget.userId, context)
             ]);
           }),
     );
@@ -185,9 +184,12 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
                         fontWeight: FontWeight.bold)),
                 ElevatedButton(
                   onPressed: () {
+                    print(widget.userId);
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateEvent()),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              CreateEvent(userId: widget.userId)),
                     );
                   },
                   child: Icon(Icons.add, color: Colors.white),
@@ -226,7 +228,10 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateEvent()),
+                      MaterialPageRoute(
+                          builder: (context) => CreateEvent(
+                                userId: widget.userId,
+                              )),
                     );
                   },
                   child: Icon(Icons.add, color: Colors.white),

@@ -20,6 +20,27 @@ class EventPage extends StatefulWidget {
 
 class _EventPage extends State<EventPage> {
   int pressedButton = 0;
+  List<String> invited = [];
+  List<String> going = [];
+  List<String> rejected = [];
+
+  void getLists() {
+    invited = widget.event.invited;
+    going = widget.event.going;
+    rejected = widget.event.rejected;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLists();
+    if (going.contains(widget.userId)) {
+      pressedButton = 1;
+    } else if (rejected.contains(widget.userId)) {
+      pressedButton = 2;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +48,12 @@ class _EventPage extends State<EventPage> {
     Color color = Theme.of(context).primaryColor;
 
     Widget ResponseSection = Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: EdgeInsets.only(bottom: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildButtonColumn(
-              Green, Icons.check_circle_outline, 'Going', pressedButton, 0),
-          _buildButtonColumn(Yellow, Icons.not_listed_location_outlined,
-              'Interested', pressedButton, 1),
+              Green, Icons.check_circle_outline, 'Going', pressedButton, 1),
           _buildButtonColumn(
               RedOrange, Icons.cancel_outlined, 'Not Going', pressedButton, 2),
         ],
@@ -42,7 +61,7 @@ class _EventPage extends State<EventPage> {
     );
 
     Widget TitleSection = Container(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(30),
       child: Row(
         children: [
           Expanded(
@@ -86,68 +105,31 @@ class _EventPage extends State<EventPage> {
     );
 
     Widget ButtonSection = Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          //rExpanded(child:
-          SizedBox(
-            width: 150.0,
-            child: TextButton(
-              onPressed: () => null,
-              child: Text('Friends going', style: TextStyle(fontSize: 18.0)),
-              style: ButtonStyle(
-                  padding:
-                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                  foregroundColor: MaterialStateProperty.all<Color>(color),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: color)))),
-            ),
-          ),
-          //),
-          //Expanded(child:
-          SizedBox(
-            width: 150.0,
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => InviteFriends(
-                        userId: widget.userId, event: widget.event)));
-              },
-              child: Text('+ Invite', style: TextStyle(fontSize: 18.0)),
-              style: ButtonStyle(
-                  padding:
-                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                  foregroundColor: MaterialStateProperty.all<Color>(WhiteGrey),
-                  backgroundColor: MaterialStateProperty.all<Color>(color),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: color)))),
-            ),
-          ),
-          //),
-        ],
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * .5,
+        child: TextButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    InviteFriends(userId: widget.userId, event: widget.event)));
+          },
+          child: Text('+ Invite Friends', style: TextStyle(fontSize: 18.0)),
+          style: ButtonStyle(
+              padding:
+                  MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+              foregroundColor: MaterialStateProperty.all<Color>(WhiteGrey),
+              backgroundColor: MaterialStateProperty.all<Color>(color),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: color)))),
+        ),
       ),
       padding: const EdgeInsets.only(bottom: 20),
     );
 
-    Widget AccountSection = Container(
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        _buildButton(color, Icons.account_circle),
-        _buildButton(color, Icons.account_circle),
-        _buildButton(color, Icons.account_circle),
-        _buildButton(color, Icons.account_circle),
-        _buildButton(color, Icons.account_circle),
-      ],
-    ));
-
     Widget DescriptionSection = Container(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(20),
       child: Text(
         'Description: '
         '${widget.event.description}',
@@ -177,15 +159,10 @@ class _EventPage extends State<EventPage> {
             children: [
               Image.asset('lib/assets/images/fountain.jpg',
                   fit: BoxFit.cover, width: double.infinity),
-              ResponseSection,
               TitleSection,
-              ButtonSection,
-              AccountSection,
-              Padding(
-                  padding: EdgeInsets.only(top: 16.0),
-                  child: Text("Alex and 10 others going",
-                      style: TextStyle(fontSize: 20.0))),
               DescriptionSection,
+              ResponseSection,
+              ButtonSection,
             ],
           ),
         ),
@@ -204,6 +181,22 @@ class _EventPage extends State<EventPage> {
             color: pressed ? color : Grey,
             onPressed: () {
               if (mounted) {
+                if (label == "Going") {
+                  if (rejected.contains(widget.userId)) {
+                    FirestoreService.removeUser(
+                        widget.userId, widget.event, "rejected");
+                  }
+                  FirestoreService.addUsertoList(
+                      widget.userId, widget.event, "going");
+                }
+                if (label == "Not Going") {
+                  if (going.contains(widget.userId)) {
+                    FirestoreService.removeUser(
+                        widget.userId, widget.event, "going");
+                  }
+                  FirestoreService.addUsertoList(
+                      widget.userId, widget.event, "rejected");
+                }
                 setState(() {
                   pressedButton = index;
                 });

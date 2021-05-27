@@ -4,20 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:circles/theme.dart';
 import 'package:circles/models/event.dart';
 
-class InviteFriends extends StatefulWidget {
+class InviteCreateFriends extends StatefulWidget {
   String userId;
-  Event event;
 
-  InviteFriends({this.userId, this.event});
+  InviteCreateFriends({this.userId});
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
-  CollectionReference events = FirebaseFirestore.instance.collection('events');
 
   @override
-  _InviteFriendsState createState() => _InviteFriendsState();
+  _InviteCreateFriendsState createState() => _InviteCreateFriendsState();
 }
 
-class _InviteFriendsState extends State<InviteFriends> {
+class _InviteCreateFriendsState extends State<InviteCreateFriends> {
   Future<QuerySnapshot> _friendsFuture;
   List<QueryDocumentSnapshot<Map<String, dynamic>>> userList;
   List<String> invitedList = [];
@@ -26,10 +24,6 @@ class _InviteFriendsState extends State<InviteFriends> {
 
   void initState() {
     super.initState();
-    /*
-    widget.events.doc(widget.event.id).get().then((DocumentSnapshot snapshot) {
-      invitedList = snapshot.get('invited');
-    });*/
     _friendsFuture = widget.users.get();
   }
 
@@ -104,13 +98,10 @@ class _InviteFriendsState extends State<InviteFriends> {
                     onPressed: () {
                       if (selectedItems.isNotEmpty) {
                         selectedItems.forEach((index) {
-                          FirestoreService.addUsertoList(
-                              userList[index].get('id'),
-                              widget.event,
-                              'invited');
+                          invitedList.add(userList[index].get('id'));
                         });
                       }
-                      Navigator.of(context).pop();
+                      Navigator.pop(context, invitedList);
                     },
                     child: Text('Invite')))
           ],

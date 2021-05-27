@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/models/circles.dart';
 import 'package:circles/models/firestore_service.dart';
+import 'package:circles/screens/individual_circle.dart';
 import 'home_screen.dart';
 
 class CirclesPage extends StatefulWidget {
@@ -132,6 +133,12 @@ class _CirclesPageState extends State<CirclesPage> {
       title: title,
       home: Scaffold(
           appBar: AppBar(
+            leading: GestureDetector(
+              child: Icon(Icons.arrow_back),
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+            ),
             title: Text(title),
             backgroundColor: Theme.of(context).primaryColor,
           ),
@@ -141,6 +148,15 @@ class _CirclesPageState extends State<CirclesPage> {
                 return Container(
                   color: RedOrange.withOpacity(0.2),
                   child: ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => IndividualCircle(
+                                    circle: circleslist[index],
+                                  )),
+                        );
+                      },
                       title: Text(circleslist[index].name),
                       subtitle: Text(circleslist[index].description)),
                 );

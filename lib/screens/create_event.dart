@@ -1,5 +1,6 @@
 import 'package:circles/models/circles.dart';
 import 'package:circles/models/firestore_service.dart';
+import 'package:circles/screens/invite_friends_create_event.dart';
 import 'package:circles/screens/your_events.dart';
 import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'home_screen.dart';
 
 class CreateEvent extends StatefulWidget {
+  String userId;
+
+  CreateEvent({this.userId});
   @override
   _CreateEventState createState() => _CreateEventState();
 }
@@ -25,10 +29,7 @@ class _CreateEventState extends State<CreateEvent> {
   String eventName;
   double lat = 39.4276;
   double long = -124.0;
-  List<String> invited = [
-    'HcsTCw3H0NgeZORzme4FZXTGYB53',
-    'maJSk2C1XSeyEKVmGBMIEni7hy23'
-  ];
+  List<String> invited = [];
 
   @override
   Widget build(BuildContext context) {
@@ -162,9 +163,11 @@ class _CreateEventState extends State<CreateEvent> {
               style: ElevatedButton.styleFrom(
                 primary: Green,
               ),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ComingSoon()));
+              onPressed: () async {
+                invited = await Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => InviteCreateFriends()));
+                invited.add(widget.userId);
+                invited = invited.toSet().toList();
               },
             ),
           ),
@@ -190,13 +193,16 @@ class _CreateEventState extends State<CreateEvent> {
                   latitude: lat,
                   longitude: long,
                   invited: invited,
-                  going: [],
+                  going: [widget.userId],
                   rejected: [],
                 );
                 FirestoreService.addEvent(newEvent);
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => Home()),
+                  MaterialPageRoute(
+                      builder: (context) => Home(
+                            userId: widget.userId,
+                          )),
                 );
               },
             ),
