@@ -1,5 +1,6 @@
 import 'package:circles/models/auth_service.dart';
 import 'package:circles/models/firestore_service.dart';
+import 'package:circles/screens/event_friend_list.dart';
 import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/models/event.dart';
@@ -162,6 +163,83 @@ class _EventPage extends State<EventPage> {
               TitleSection,
               DescriptionSection,
               ResponseSection,
+              Container(
+                padding: EdgeInsets.only(bottom: 20.0),
+
+                /*ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(pressed ? Green : WhiteGrey),
+              side: MaterialStateProperty.all<BorderSide>(pressed
+                  ? BorderSide(width: 3.0, color: Green)
+                  : BorderSide(width: 3.0, color: Grey)),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0)))),*/
+
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        width: 100.0,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(Green),
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)))),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EventFriendList(
+                                        type: "invited", event: widget.event)),
+                              );
+                            },
+                            child: Text('Invited')),
+                      ),
+                      Container(
+                        width: 100.0,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(Green),
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)))),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EventFriendList(
+                                        type: "going", event: widget.event)),
+                              );
+                            },
+                            child: Text('Going')),
+                      ),
+                      Container(
+                        width: 100.0,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(Green),
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)))),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EventFriendList(
+                                        type: "rejected", event: widget.event)),
+                              );
+                            },
+                            child: Text('Not Going')),
+                      ),
+                    ]),
+              ),
               ButtonSection,
             ],
           ),

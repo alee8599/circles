@@ -8,7 +8,7 @@ class EventFriendList extends StatefulWidget {
   Event event;
   String type;
 
-  EventFriendList({this.event});
+  EventFriendList({this.event, this.type});
 
   @override
   _EventFriendListState createState() => _EventFriendListState();
@@ -62,6 +62,12 @@ class _EventFriendListState extends State<EventFriendList> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(widget.type),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Icon(Icons.arrow_back),
+          ),
         ),
         body: userNames.isNotEmpty
             ? ListView.builder(
@@ -70,7 +76,7 @@ class _EventFriendListState extends State<EventFriendList> {
                   return ListTile(title: Text(userNames[index]));
                 })
             : Text(
-                'No friends in Circle',
+                'Nobody in the list',
               ));
   }
 }
