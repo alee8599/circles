@@ -2,13 +2,30 @@ import 'package:circles/models/user_model.dart';
 
 class Chat {
   final String event_name;
-  final List<String> users;
-  final List<String> msgs;
+  final List<dynamic> users;
+  final List<dynamic> msgs;
 
   Chat({
     this.event_name,
     this.users,
     this.msgs,
+  });
+}
+
+class Message {
+  final String sender;
+  final String
+  time; // Would usually be type DateTime or Firebase Timestamp in production apps
+  final String text;
+  final bool isLiked;
+  final bool unread;
+
+  Message({
+    this.sender,
+    this.time,
+    this.text,
+    this.isLiked,
+    this.unread,
   });
 }
 

@@ -5,8 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatefulWidget {
+
+
   final CirclesUser user;
-  ChatScreen({this.user});
+  final int index;
+  ChatScreen({this.user, this.index});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -15,12 +18,12 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   String message = '';
   var now = DateTime.now();
-  void sendMessage() async {
-    // FocusScope.of(context).unfocus();
-    var userData = await FirebaseFirestore.instance.collection("chats").doc("dev_team").get();
-    var old_msgs = userData["msgs"];
-    old_msgs.insert(0, message);
-    await FirebaseFirestore.instance.collection('chats').doc('dev_team').update({'msgs': old_msgs});
+  void sendMessage(int index, AsyncSnapshot<QuerySnapshot> snapshot) async {
+
+    var messages = snapshot.data.docs[index].get('msgs');
+    var id = snapshot.data.docs[index].id;
+    messages.insert(0, message);
+    await FirebaseFirestore.instance.collection('chats').doc(id).update({'msgs': messages});
     // setState(() {
     //   // FocusScope.of(context).unfocus();
     //   // final Message msg = Message(
@@ -103,7 +106,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  _buildMessageComposer() {
+  _buildMessageComposer(int index, AsyncSnapshot<QuerySnapshot> snapshot) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       height: 70.0,
@@ -132,7 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
             onPressed: () {
-              sendMessage();
+              sendMessage(index, snapshot);
             },
           ),
         ],
@@ -143,15 +146,16 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final int index = widget.index;
     return StreamBuilder(
         stream: _chatStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          var messages = snapshot.data.docs[0].get('msgs');
+          var messages = snapshot.data.docs[index].get('msgs');
           return Scaffold(
             backgroundColor: Theme.of(context).primaryColor,
             appBar: AppBar(
               title: Text(
-                'Chat',
+                "Test",
                 style: TextStyle(
                   fontSize: 28.0,
                   fontWeight: FontWeight.bold,
@@ -198,7 +202,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                   ),
-                  _buildMessageComposer(),
+                  _buildMessageComposer(index, snapshot),
                 ],
               ),
             ),
