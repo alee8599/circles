@@ -1,4 +1,3 @@
-import 'package:circles/screens/create_circle.dart';
 import 'package:circles/screens/circles_page.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/theme.dart';

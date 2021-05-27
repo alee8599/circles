@@ -188,7 +188,10 @@ class _PublicEventsState extends State<PublicEvents>
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateEvent()),
+                      MaterialPageRoute(
+                          builder: (context) => CreateEvent(
+                                userId: userId,
+                              )),
                     );
                   },
                   child: Icon(Icons.add, color: Colors.white),

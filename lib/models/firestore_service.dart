@@ -45,6 +45,17 @@ class FirestoreService {
     }
   }
 
+  static Future addUsertoCircle(Circles circle, String uid) async {
+    circle.userIds.add(uid);
+    circle.userIds = circle.userIds.toSet().toList();
+    return await FirebaseFirestore.instance
+        .collection('circles')
+        .doc(circle.id)
+        .update({'userIds': circle.userIds})
+        .then((value) => print("User invited"))
+        .catchError((error) => print("Failed to invite user: $error"));
+  }
+
   Future retrieveAllCircles(String uid) async {
     try {
       var circles = await _circlesCollectionReference.get();

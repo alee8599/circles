@@ -1,12 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:circles/theme.dart';
 import 'event_card.dart';
 import 'dart:convert';
 import 'filters.dart';
 import 'package:circles/models/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:math';
 
 class EventList extends StatefulWidget {
   bool public;

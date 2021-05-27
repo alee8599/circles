@@ -1,3 +1,4 @@
+import 'package:circles/screens/invite_circle.dart';
 import 'package:circles/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/models/circles.dart';
@@ -94,23 +95,6 @@ class _CreateCircleState extends State<CreateCircle> {
                     }
                   }),
             ),
-            Padding(
-                padding: EdgeInsets.only(top: 8.0),
-                child: Text("Friend Name", style: TextStyle(fontSize: 20.0))),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 20.0),
-              child: TextField(
-                  decoration:
-                      InputDecoration(fillColor: WhiteGrey, filled: true),
-                  controller: textControl,
-                  onChanged: (value) {
-                    if (mounted) {
-                      setState(() {
-                        curFriendName = value.trim();
-                      });
-                    }
-                  }),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -123,13 +107,17 @@ class _CreateCircleState extends State<CreateCircle> {
                     primary: RedOrange,
                   ),
                   onPressed: () async {
-                    FirestoreService _firestoreService = new FirestoreService();
+                    newCircle.userIds = await Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => InviteCreateCircle()));
+
+                    /*FirestoreService _firestoreService = new FirestoreService();
                     String id = await _firestoreService
                         .getUserIdFromName(curFriendName);
 
                     if (newCircle.userIds == null) newCircle.userIds = [];
                     if (id != null) newCircle.userIds.add(id);
-                    textControl.clear();
+                    textControl.clear();*/
                   },
                 ),
               ],
@@ -148,6 +136,9 @@ class _CreateCircleState extends State<CreateCircle> {
                   ),
                   onPressed: () async {
                     // Push the circle we've created to Firebase
+                    print(userId);
+
+                    print(newCircle.userIds);
                     newCircle.userIds.add(userId);
 
                     FirestoreService _firestoreService = new FirestoreService();
@@ -158,10 +149,7 @@ class _CreateCircleState extends State<CreateCircle> {
                       print(e);
                     }
 
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
+                    Navigator.of(context).pop();
                   },
                 ),
               ],

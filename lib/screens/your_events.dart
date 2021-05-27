@@ -187,7 +187,8 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateEvent()),
+                      MaterialPageRoute(
+                          builder: (context) => CreateEvent(userId: userId)),
                     );
                   },
                   child: Icon(Icons.add, color: Colors.white),

@@ -2,49 +2,43 @@ import 'package:circles/models/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:circles/theme.dart';
+import 'package:circles/models/circles.dart';
 import 'package:circles/models/event.dart';
 
-class InviteFriends extends StatefulWidget {
-  String userId;
-  Event event;
-
-  InviteFriends({this.userId, this.event});
-
+class InviteCreateCircle extends StatefulWidget {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
-  CollectionReference events = FirebaseFirestore.instance.collection('events');
+  CollectionReference circles =
+      FirebaseFirestore.instance.collection('circles');
 
   @override
-  _InviteFriendsState createState() => _InviteFriendsState();
+  _InviteCreateCircleState createState() => _InviteCreateCircleState();
 }
 
-class _InviteFriendsState extends State<InviteFriends> {
+class _InviteCreateCircleState extends State<InviteCreateCircle> {
   Future<QuerySnapshot> _friendsFuture;
   List<QueryDocumentSnapshot<Map<String, dynamic>>> userList;
-  List<String> invitedList;
-
+  List<String> circlesList;
+  List<String> invited = [];
   List<int> selectedItems = [];
 
   void initState() {
     super.initState();
-    widget.events.doc(widget.event.id).get().then((DocumentSnapshot snapshot) {
-      invitedList = snapshot.get('invited');
-    });
+    /*widget.circles
+        .doc(widget.circle.id)
+        .get()
+        .then((DocumentSnapshot snapshot) {
+      circlesList = snapshot.get('userIds');
+    });*/
     _friendsFuture = widget.users.get();
   }
-
-/*return FutureBuilder<QuerySnapshot>(
-  future: _eventsFuture,
-  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-  if (snapshot.connectionState == ConnectionState.done) {
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> eventlist =
-  snapshot.data.docs;*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          title: Text('Invite Friends', style: TextStyle(color: WhiteGrey)),
+          title:
+              Text('Add Friends to Circle', style: TextStyle(color: WhiteGrey)),
         ),
         body: Column(
           children: [
@@ -103,16 +97,20 @@ class _InviteFriendsState extends State<InviteFriends> {
                     onPressed: () {
                       if (selectedItems.isNotEmpty) {
                         selectedItems.forEach((index) {
-                          FirestoreService.addUsertoList(
-                              userList[index].get('id'),
-                              widget.event,
-                              'invited');
+                          invited.add(userList[index].get('id'));
                         });
                       }
-                      Navigator.of(context).pop();
+                      print(invited);
+                      Navigator.pop(context, invited);
                     },
-                    child: Text('Invite')))
+                    child: Text('Add Friends to Circle')))
           ],
         ));
   }
 }
+
+/*
+                          FirestoreService.addUsertoList(
+                              userList[index].get('id'),
+                              widget.circle,
+                              'invited');*/

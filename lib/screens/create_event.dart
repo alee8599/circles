@@ -13,6 +13,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'home_screen.dart';
 
 class CreateEvent extends StatefulWidget {
+  String userId;
+
+  CreateEvent({this.userId});
   @override
   _CreateEventState createState() => _CreateEventState();
 }
@@ -196,7 +199,10 @@ class _CreateEventState extends State<CreateEvent> {
                 FirestoreService.addEvent(newEvent);
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => Home()),
+                  MaterialPageRoute(
+                      builder: (context) => Home(
+                            userId: widget.userId,
+                          )),
                 );
               },
             ),
