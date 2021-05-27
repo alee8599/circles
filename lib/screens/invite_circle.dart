@@ -6,6 +6,10 @@ import 'package:circles/models/circles.dart';
 import 'package:circles/models/event.dart';
 
 class InviteCreateCircle extends StatefulWidget {
+  String userId;
+
+  InviteCreateCircle({this.userId});
+
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   CollectionReference circles =
       FirebaseFirestore.instance.collection('circles');

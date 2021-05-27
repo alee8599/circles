@@ -23,7 +23,7 @@ class PublicEvents extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PublicEventsState createState() => _PublicEventsState(userId);
+  _PublicEventsState createState() => _PublicEventsState();
 }
 
 final auth = FirebaseAuth.instance;
@@ -31,8 +31,7 @@ final auth = FirebaseAuth.instance;
 class _PublicEventsState extends State<PublicEvents>
     with SingleTickerProviderStateMixin {
   bool top = false;
-  final String userId;
-  _PublicEventsState(this.userId);
+  _PublicEventsState();
 
   @override
   List<Marker> allMarkers = [];
@@ -48,7 +47,7 @@ class _PublicEventsState extends State<PublicEvents>
     //  DocumentSnapshot variable = await Firestore.instance.('events');
     fetchMarkersList();
     print('user Id from events state');
-    print(userId);
+    print(widget.userId);
   }
 
   void dispose() {
@@ -132,8 +131,8 @@ class _PublicEventsState extends State<PublicEvents>
             double slide = rightSlide * _animationController.value;
 
             return Stack(children: [
-              DrawerMenu(userId),
-              eventsStack(slide, userId, context)
+              DrawerMenu(widget.userId),
+              eventsStack(slide, widget.userId, context)
             ]);
           }),
     );
@@ -190,7 +189,7 @@ class _PublicEventsState extends State<PublicEvents>
                       context,
                       MaterialPageRoute(
                           builder: (context) => CreateEvent(
-                                userId: userId,
+                                userId: widget.userId,
                               )),
                     );
                   },
@@ -230,7 +229,9 @@ class _PublicEventsState extends State<PublicEvents>
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateEvent()),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              CreateEvent(userId: widget.userId)),
                     );
                   },
                   child: Icon(Icons.add, color: Colors.white),
