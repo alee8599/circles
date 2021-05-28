@@ -145,6 +145,12 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
         child: Stack(
           children: [
             Container(
+              color: WhiteGrey,
+              child: Center(
+                child: Text('Map is not supported on web'),
+              ),
+            ),
+            Container(
               height: 0.85 *
                   (MediaQuery.of(context).size.height *
                       MediaQuery.of(context).devicePixelRatio),
